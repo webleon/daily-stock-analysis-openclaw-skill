@@ -68,13 +68,30 @@ vim ~/.openclaw/cron/jobs.json
 
 ## 获取 API Key
 
-### Gemini API（推荐）
+### LLM 配置（已配置 ✅）
 
-1. 访问：https://aistudio.google.com/
-2. 点击 "Get API Key"
-3. 复制 Key 到 `.env`：
+**当前配置：** 使用 OpenClaw 现有的 Bailian（通义千问）配置
+
+```bash
+OPENAI_API_KEY=sk-sp-0f31fbee0fd044e8941c1714f447433e
+OPENAI_BASE_URL=https://coding.dashscope.aliyuncs.com/v1
+OPENAI_MODEL=qwen3.5-plus
+```
+
+**如需更换模型：**
+
+1. **Volces（火山方舟）**
    ```bash
-   GEMINI_API_KEY=your_key_here
+   OPENAI_API_KEY=84915a62-b2c0-4cf8-b00c-3d1f7fa5dc27
+   OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/coding/v3
+   OPENAI_MODEL=ark-code-latest
+   ```
+
+2. **Gemini**
+   ```bash
+   OPENAI_API_KEY=your_gemini_key
+   OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+   OPENAI_MODEL=gemini-2.0-flash
    ```
 
 ### Tavily 搜索（可选）
