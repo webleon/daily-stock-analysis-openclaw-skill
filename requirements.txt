@@ -1,0 +1,24 @@
+# Daily Stock Analysis - Core Dependencies
+
+# 数据处理
+pandas>=2.0.0
+numpy>=1.24.0
+
+# A 股数据
+akshare>=1.12.0
+
+# 美股/港股数据
+yfinance>=0.2.0
+
+# LLM 统一接口
+litellm>=1.0.0
+
+# 工具库
+requests>=2.28.0
+python-dotenv>=1.0.0
+
+# 可选：新闻搜索
+# tavily-python>=0.3.0
+
+# 可选：A 股增强数据
+# tushare>=1.2.0
