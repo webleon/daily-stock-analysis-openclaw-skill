@@ -91,6 +91,133 @@ def apply_placeholder_fill(result: "AnalysisResult", missing_fields: List[str]) 
             result.dashboard["battle_plan"]["sniper_points"]["stop_loss"] = "待补充"
 
 
+def analyze_stock_with_strategy(
+    stock_data: dict,
+    strategy_id: str,
+    search_service = None
+) -> Optional[str]:
+    """
+    使用特定策略分析股票
+    
+    Args:
+        stock_data: 股票数据
+        strategy_id: 策略 ID（如 chan_theory, wave_theory 等）
+        search_service: 搜索服务（可选）
+    
+    Returns:
+        分析报告文本，失败返回 None
+    """
+    from src.core.market_strategy import get_strategy, list_strategies
+    
+    strategy = get_strategy(strategy_id)
+    if not strategy:
+        logger.error(f"Strategy {strategy_id} not found")
+        return None
+    
+    try:
+        # 构建分析 Prompt
+        stock_code = stock_data.get('code', 'Unknown')
+        stock_name = STOCK_NAME_MAP.get(stock_code, stock_code)
+        
+        # 准备数据摘要
+        data_summary = _prepare_stock_data_summary(stock_data)
+        
+        # 构建完整的 Prompt
+        prompt = f"""{strategy.prompt_template}
+
+---
+
+# 股票数据
+
+## 股票信息
+- 代码：{stock_code}
+- 名称：{stock_name}
+
+{data_summary}
+
+---
+
+请直接输出分析报告内容，不要输出其他说明文字。
+"""
+        
+        # 调用 LLM
+        config = get_config()
+        model = config.litellm_model or "openai/ark-code-latest"
+        
+        logger.info(f"[Analyzer] Analyzing {stock_code} with strategy {strategy_id} using model {model}")
+        
+        response = litellm.completion(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=2048
+        )
+        
+        analysis = response.choices[0].message.content
+        
+        if analysis:
+            logger.info(f"[Analyzer] Strategy analysis generated for {stock_code}, length: {len(analysis)}")
+            persist_llm_usage(response, model, f"strategy_{strategy_id}", stock_code)
+            return analysis
+        else:
+            logger.warning(f"[Analyzer] Strategy analysis returned empty for {stock_code}")
+            return None
+            
+    except Exception as e:
+        logger.error(f"[Analyzer] Strategy analysis failed for {stock_code}: {e}")
+        return None
+
+
+def analyze_stock_default(
+    stock_data: dict,
+    search_service = None
+) -> Optional[str]:
+    """
+    使用默认策略（多头趋势）分析股票
+    
+    Args:
+        stock_data: 股票数据
+        search_service: 搜索服务（可选）
+    
+    Returns:
+        分析报告文本，失败返回 None
+    """
+    return analyze_stock_with_strategy(stock_data, "bull_trend", search_service)
+
+
+def _prepare_stock_data_summary(stock_data: dict) -> str:
+    """准备股票数据摘要"""
+    summary_lines = []
+    
+    # 实时行情
+    if 'realtime' in stock_data:
+        rt = stock_data['realtime']
+        summary_lines.append("## 实时行情")
+        summary_lines.append(f"- 当前价格：{rt.get('current', 0):.2f} 元")
+        summary_lines.append(f"- 涨跌幅：{rt.get('change_pct', 0):+.2f}%")
+        summary_lines.append(f"- 成交量：{rt.get('volume', 0)/100:.0f} 手")
+        summary_lines.append(f"- 成交额：{rt.get('amount', 0)/1e8:.2f} 亿元")
+        summary_lines.append("")
+    
+    # 日 K 数据
+    if 'daily' in stock_data and stock_data['daily']:
+        daily_list = stock_data['daily']
+        if isinstance(daily_list, list) and len(daily_list) > 0:
+            daily = daily_list[0]
+        else:
+            daily = daily_list
+        summary_lines.append("## 日 K 数据")
+        summary_lines.append(f"- 收盘价：{daily.get('close', 0):.2f} 元")
+        summary_lines.append(f"- 涨跌幅：{daily.get('change_pct', 0):+.2f}%")
+        summary_lines.append(f"- MA5: {daily.get('ma5', 0):.2f} 元")
+        summary_lines.append(f"- MA10: {daily.get('ma10', 0):.2f} 元")
+        summary_lines.append(f"- MA20: {daily.get('ma20', 0):.2f} 元")
+        summary_lines.append(f"- 成交量：{daily.get('volume', 0)/100:.0f} 手")
+        summary_lines.append("")
+    
+    return "\n".join(summary_lines)
+
+
 def get_stock_name_multi_source(
     stock_code: str,
     context: Optional[Dict] = None,

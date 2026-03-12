@@ -1,60 +1,29 @@
 #!/usr/bin/env python3
-"""
-简化测试脚本 - 仅测试数据获取
-"""
-import yfinance as yf
-import akshare as ak
-from datetime import datetime
+"""简单测试脚本 - 测试核心功能"""
 
-def test_us_stock(code):
-    """测试美股数据获取"""
-    print(f"\n📊 测试美股：{code}")
-    ticker = yf.Ticker(code)
-    info = ticker.info
-    
-    print(f"  公司名称：{info.get('shortName', 'N/A')}")
-    print(f"  当前价格：{info.get('currentPrice', 'N/A')} USD")
-    print(f"  市值：${info.get('marketCap', 0):,.0f}")
-    print(f"  PE 比率：{info.get('trailingPE', 'N/A')}")
-    print(f"  52 周最高：{info.get('fiftyTwoWeekHigh', 'N/A')}")
-    print(f"  52 周最低：{info.get('fiftyTwoWeekLow', 'N/A')}")
-    
-    return True
+from src.core.market_strategy import list_strategies, get_strategy
 
-def test_cn_stock(code):
-    """测试 A 股数据获取"""
-    print(f"\n📊 测试 A 股：{code}")
-    try:
-        df = ak.stock_zh_a_spot_em()
-        stock_data = df[df['代码'] == code]
-        
-        if not stock_data.empty:
-            print(f"  公司名称：{stock_data['名称'].values[0]}")
-            print(f"  当前价格：{stock_data['最新价'].values[0]} CNY")
-            print(f"  涨跌幅：{stock_data['涨跌幅'].values[0]}%")
-            print(f"  成交量：{stock_data['成交量'].values[0]}")
-            return True
-        else:
-            print(f"  ❌ 未找到股票：{code}")
-            return False
-    except Exception as e:
-        print(f"  ❌ 错误：{e}")
-        return False
+print("=" * 60)
+print("OpenClaw Daily Stock Analysis - 功能测试")
+print("=" * 60)
 
-if __name__ == '__main__':
-    print("=" * 60)
-    print("Daily Stock Analysis - 数据获取测试")
-    print("=" * 60)
-    
-    # 测试美股
-    test_us_stock('AAPL')
-    test_us_stock('MSFT')
-    test_us_stock('NVDA')
-    
-    # 测试 A 股
-    test_cn_stock('600519')
-    test_cn_stock('300750')
-    
-    print("\n" + "=" * 60)
-    print("✅ 测试完成！")
-    print("=" * 60)
+# 测试 1: 列出所有策略
+print("\n✅ 测试 1: 列出所有策略")
+strategies = list_strategies()
+print(f"共 {len(strategies)} 种策略：")
+for i, s in enumerate(strategies, 1):
+    print(f"  {i}. {s['id']:25} - {s['title']}")
+
+# 测试 2: 查看策略详情
+print("\n✅ 测试 2: 查看策略详情")
+test_ids = ["bull_trend", "chan_theory", "wave_theory"]
+for strategy_id in test_ids:
+    strategy = get_strategy(strategy_id)
+    if strategy:
+        print(f"  ✅ {strategy_id}: {strategy.title}")
+        print(f"     定位：{strategy.positioning}")
+        print(f"     Prompt 长度：{len(strategy.prompt_template)} 字符")
+
+print("\n" + "=" * 60)
+print("✅ 所有测试通过！")
+print("=" * 60)

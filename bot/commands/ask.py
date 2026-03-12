@@ -10,7 +10,6 @@ Usage:
 
 import re
 import logging
-import uuid
 from typing import List, Optional
 
 from bot.commands.base import BotCommand
@@ -76,7 +75,7 @@ class AskCommand(BotCommand):
     def validate_args(self, args: List[str]) -> Optional[str]:
         """Validate arguments."""
         if not args:
-            return "请输入股票代码。用法: /ask <股票代码> [策略名称]\n示例: /ask 600519 用缠论分析"
+            return "请输入股票代码。用法：/ask <股票代码> [策略名称]\n示例：/ask 600519 用缠论分析"
 
         code = args[0].upper()
         is_a_stock = re.match(r"^\d{6}$", code)
@@ -84,85 +83,78 @@ class AskCommand(BotCommand):
         is_us_stock = re.match(r"^[A-Z]{1,5}(\.[A-Z]{1,2})?$", code)
 
         if not (is_a_stock or is_hk_stock or is_us_stock):
-            return f"无效的股票代码: {code}（A股6位数字 / 港股HK+5位数字 / 美股1-5个字母）"
+            return f"无效的股票代码：{code}（A 股 6 位数字 / 港股 HK+5 位数字 / 美股 1-5 个字母）"
 
         return None
 
     def _parse_strategy(self, args: List[str]) -> str:
         """Parse strategy from arguments, returning strategy id."""
         if len(args) < 2:
-            return "bull_trend"
+            return "bull_trend"  # Default strategy
 
         # Join remaining args as the strategy text
         strategy_text = " ".join(args[1:]).strip()
 
         # Try direct strategy id match first
         try:
-            from src.agent.factory import get_skill_manager
-            sm = get_skill_manager()
-            available_ids = [s.name for s in sm.list_skills()]
-            if strategy_text in available_ids:
-                return strategy_text
-        except Exception:
+            from src.core.market_strategy import get_strategy
+            strategy = get_strategy(strategy_text)
+            if strategy:
+                return strategy
+        except:
             pass
 
-        # Try CN name mapping
-        for cn_name, strategy_id in STRATEGY_NAME_MAP.items():
-            if cn_name in strategy_text:
+        # Try Chinese name mapping
+        for name, strategy_id in STRATEGY_NAME_MAP.items():
+            if name in strategy_text:
+                logger.info(f"[AskCommand] Matched strategy '{name}' -> '{strategy_id}'")
                 return strategy_id
 
-        # Default
+        # Default to bull_trend if no match
+        logger.warning(f"[AskCommand] No strategy matched from '{strategy_text}', using default")
         return "bull_trend"
 
     def execute(self, message: BotMessage, args: List[str]) -> BotResponse:
-        """Execute the ask command via Agent pipeline."""
-        config = get_config()
-
-        if not config.agent_mode:
-            return BotResponse.text_response(
-                "⚠️ Agent 模式未开启，无法使用问股功能。\n请在配置中设置 `AGENT_MODE=true`。"
-            )
-
-        code = canonical_stock_code(args[0])
+        """Execute the ask command."""
+        from src.analyzer import GeminiAnalyzer
+        from src.search_service import SearchService
+        from data_provider.manager import DataFetcherManager
+        
+        # Parse arguments
+        code = args[0].upper()
         strategy_id = self._parse_strategy(args)
-        strategy_text = " ".join(args[1:]).strip() if len(args) > 1 else ""
-
-        logger.info(f"[AskCommand] Stock: {code}, Strategy: {strategy_id}, Extra: {strategy_text}")
-
+        
+        logger.info(f"[AskCommand] Analyzing {code} with strategy {strategy_id}")
+        
         try:
-            from src.agent.factory import build_agent_executor
-            executor = build_agent_executor(config, skills=[strategy_id] if strategy_id else None)
-
-            # Build message
-            user_msg = f"请使用 {strategy_id} 策略分析股票 {code}"
-            if strategy_text:
-                user_msg = f"请分析股票 {code}，{strategy_text}"
-
-            # Each /ask invocation is a self-contained single-shot analysis; isolate
-            # sessions per request so that different stocks or retry attempts never
-            # bleed context into each other.
-            session_id = f"ask_{code}_{uuid.uuid4()}"
-            result = executor.chat(message=user_msg, session_id=session_id)
-
-            if result.success:
-                # Prepend strategy tag
-                strategy_name = strategy_id
-                try:
-                    from src.agent.factory import get_skill_manager
-                    sm2 = get_skill_manager()
-                    for s in sm2.list_skills():
-                        if s.name == strategy_id:
-                            strategy_name = s.display_name
-                            break
-                except Exception:
-                    pass
-
-                header = f"📊 {code} | 策略: {strategy_name}\n{'─' * 30}\n"
-                return BotResponse.text_response(header + result.content)
+            # Get stock data
+            data_manager = DataFetcherManager()
+            stock_data = data_manager.get_stock_data(code)
+            
+            if not stock_data:
+                return BotResponse.error_response(f"无法获取股票 {code} 的数据")
+            
+            # Initialize analyzer
+            analyzer = GeminiAnalyzer()
+            search_service = SearchService()
+            
+            # Get strategy blueprint
+            from src.core.market_strategy import get_strategy
+            strategy = get_strategy(strategy_id)
+            
+            # Generate analysis
+            logger.info(f"[AskCommand] Generating analysis with LLM...")
+            analysis = analyzer.analyze_stock_with_strategy(
+                stock_data=stock_data,
+                strategy_id=strategy_id,
+                search_service=search_service
+            )
+            
+            if analysis:
+                return BotResponse.markdown_response(analysis)
             else:
-                return BotResponse.text_response(f"⚠️ 分析失败: {result.error}")
-
+                return BotResponse.error_response("分析失败，请稍后重试")
+                
         except Exception as e:
-            logger.error(f"Ask command failed: {e}")
-            logger.exception("Ask error details:")
-            return BotResponse.text_response(f"⚠️ 问股执行出错: {str(e)}")
+            logger.error(f"[AskCommand] Error: {e}")
+            return BotResponse.error_response(f"分析出错：{str(e)}")
