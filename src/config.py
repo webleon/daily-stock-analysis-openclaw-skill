@@ -140,6 +140,13 @@ class Config:
     news_max_age_days: int = 3   # 新闻最大时效（天）
     bias_threshold: float = 5.0  # 乖离率阈值（%），超过此值提示不追高
 
+    # Fundamental pipeline config
+    enable_fundamental_pipeline: bool = True
+    fundamental_stage_timeout_seconds: float = 1.5
+    fundamental_fetch_timeout_seconds: float = 0.8
+    fundamental_cache_ttl_seconds: int = 120
+    fundamental_cache_max_entries: int = 256
+
     # === Agent 模式配置 ===
     agent_mode: bool = False
     agent_max_steps: int = 10
@@ -610,6 +617,13 @@ class Config:
             serpapi_keys=serpapi_keys,
             news_max_age_days=max(1, int(os.getenv('NEWS_MAX_AGE_DAYS', '3'))),
             bias_threshold=max(1.0, float(os.getenv('BIAS_THRESHOLD', '5.0'))),
+            # Fundamental pipeline
+            enable_fundamental_pipeline=os.getenv('ENABLE_FUNDAMENTAL_PIPELINE', 'true').lower() == 'true',
+            fundamental_stage_timeout_seconds=float(os.getenv('FUNDAMENTAL_STAGE_TIMEOUT_SECONDS', '1.5')),
+            fundamental_fetch_timeout_seconds=float(os.getenv('FUNDAMENTAL_FETCH_TIMEOUT_SECONDS', '0.8')),
+            fundamental_cache_ttl_seconds=int(os.getenv('FUNDAMENTAL_CACHE_TTL_SECONDS', '120')),
+            fundamental_cache_max_entries=int(os.getenv('FUNDAMENTAL_CACHE_MAX_ENTRIES', '256')),
+
             agent_mode=os.getenv('AGENT_MODE', 'false').lower() == 'true',
             agent_max_steps=int(os.getenv('AGENT_MAX_STEPS', '10')),
             agent_skills=[s.strip() for s in os.getenv('AGENT_SKILLS', '').split(',') if s.strip()],
