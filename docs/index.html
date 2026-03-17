@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Stock Analysis - OpenClaw Skill</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        section {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #667eea;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #764ba2;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .badge-stars {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .badge-license {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+
+        .badge-python {
+            background: #74b9ff;
+            color: #fff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block .comment {
+            color: #a0aec0;
+        }
+
+        .code-block .command {
+            color: #68d391;
+        }
+
+        .code-block .key {
+            color: #f6ad55;
+        }
+
+        .code-block .value {
+            color: #63b3ed;
+        }
+
+        .dashboard-preview {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            text-align: center;
+        }
+
+        .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+            transition: width 1s ease-out;
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.3);
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            background: #1a202c;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            section {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-dots" id="navDots"></nav>
+
+    <!-- Section 1: Hero -->
+    <section class="visible" id="section1">
+        <div class="container">
+            <div class="badge-container">
+                <span class="badge badge-stars">⭐ GitHub Stars</span>
+                <span class="badge badge-license">📄 MIT License</span>
+                <span class="badge badge-python">🐍 Python 3.10+</span>
+            </div>
+            <h1>Daily Stock Analysis</h1>
+            <p class="subtitle">🤖 LLM 驱动的智能股票分析系统</p>
+            <p>支持 A 股/港股/美股自选股深度分析<br>每日自动推送「决策仪表盘」到 Telegram/邮件</p>
+            <div style="margin-top: 2rem;">
+                <a href="https://github.com/webleon/daily-stock-analysis-openclaw-skill" class="cta-button">🚀 立即开始</a>
+                <a href="#section2" class="cta-button cta-secondary">了解更多</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">⬇️</div>
+    </section>
+
+    <!-- Section 2: Core Features -->
+    <section id="section2">
+        <div class="container">
+            <h2>✨ 核心功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>AI 决策仪表盘</h3>
+                    <p>一句话核心结论 + 精确买卖点位 + 操作检查清单</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>多维度分析</h3>
+                    <p>技术面（MA/MACD/RSI）+ 筹码分布 + 舆情情报</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>全球市场</h3>
+                    <p>支持 A 股、港股、美股及美股指数</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>策略系统</h3>
+                    <p>内置 A 股「三段式复盘」与美股「Regime Strategy」</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>多渠道推送</h3>
+                    <p>Telegram、邮件、企业微信、飞书等</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>定时运行</h3>
+                    <p>OpenClaw Cron Job 自动执行</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Dashboard Preview -->
+    <section id="section3">
+        <div class="container">
+            <h2>📊 决策仪表盘示例</h2>
+            <div class="dashboard-preview">
+📊 决策仪表盘 - AAPL
+
+🎯 核心结论
+一句话：多头排列 + 低乖离率，最佳买点出现
+信号类型：🟢 买入信号
+紧急程度：立即行动
+
+📈 数据视角
+趋势状态：多头排列（MA5>MA10>MA20）
+现价：$178.72
+MA5: $177.50 (乖离 +0.69%)
+MA10: $175.20 (乖离 +2.01%)
+MA20: $172.30 (乖离 +3.73%)
+支撑位：$177.50
+压力位：$182.50
+
+💰 狙击点位
+理想买入点：$177.50（MA5 附近，乖离率<2%）
+次优买入点：$175.20（MA10 附近，乖离率<5%）
+止损位：$172.30（跌破 MA20）
+目标位：$182.50（前高压力位）
+
+✅ 检查清单
+✅ 多头排列：MA5>MA10>MA20
+✅ 乖离率合理：+0.69% < 2%
+✅ 缩量回调：量比 0.72
+✅ MA5 支撑有效
+✅ MACD 金叉
+⚠️  RSI 中性：52.3
+
+💡 操作建议
+空仓者：建议立即建仓 3 成仓位
+持仓者：继续持有，以 MA5 为防守位
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Trading Philosophy -->
+    <section id="section4">
+        <div class="container">
+            <h2>🎯 核心交易理念</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>1️⃣ 严进策略（不追高）</h3>
+                    <p><span class="highlight">乖离率 < 2%</span>：最佳买点</p>
+                    <p><span class="highlight">2-5%</span>：可小仓介入</p>
+                    <p><span class="highlight">> 5%</span>：严禁追高！</p>
+                </div>
+                <div class="feature-card">
+                    <h3>2️⃣ 趋势交易（顺势而为）</h3>
+                    <p><span class="highlight">多头排列必须</span>：MA5 > MA10 > MA20</p>
+                    <p>只做多头排列，空头排列坚决不碰</p>
+                </div>
+                <div class="feature-card">
+                    <h3>3️⃣ 效率优先（筹码结构）</h3>
+                    <p>90% 集中度 < 15% 表示筹码集中</p>
+                    <p>70-90% 获利盘时需警惕获利回吐</p>
+                </div>
+                <div class="feature-card">
+                    <h3>4️⃣ 买点偏好（回踩支撑）</h3>
+                    <p><span class="highlight">最佳</span>：缩量回踩 MA5</p>
+                    <p><span class="highlight">次优</span>：回踩 MA10</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Quick Start -->
+    <section id="section5">
+        <div class="container">
+            <h2>🚀 快速开始</h2>
+            <div class="code-block">
+<span class="comment"># 1. 安装 Skill</span>
+<span class="command">cd ~/.openclaw/workspace/skills</span>
+<span class="command">git clone https://github.com/webleon/daily-stock-analysis-openclaw-skill.git</span>
+<span class="command">cd daily-stock-analysis-openclaw-skill</span>
+<span class="command">pip3 install -r requirements.txt</span>
+
+<span class="comment"># 2. 配置环境变量</span>
+<span class="command">cp .env.example .env</span>
+<span class="command">vim .env</span>
+
+<span class="comment"># 3. 测试运行</span>
+<span class="command">./run.sh AAPL</span>
+<span class="command">./run.sh --market-review</span>
+            </div>
+            <div style="margin-top: 2rem;">
+                <a href="https://github.com/webleon/daily-stock-analysis-openclaw-skill#readme" class="cta-button">📖 查看完整文档</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Tech Stack -->
+    <section id="section6">
+        <div class="container">
+            <h2>🛠️ 技术栈</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <div class="tech-icon">🐍</div>
+                    <p>Python 3.10+</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🤖</div>
+                    <p>LiteLLM</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📊</div>
+                    <p>AkShare</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">💹</div>
+                    <p>YFinance</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📱</div>
+                    <p>Telegram</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📧</div>
+                    <p>SMTP</p>
+                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">数据源支持</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">内置策略</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5+</div>
+                    <div class="stat-label">推送渠道</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">开源免费</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: CTA -->
+    <section id="section7">
+        <div class="container">
+            <h2>🎉 立即开始</h2>
+            <p>加入 Daily Stock Analysis，让 AI 为你的投资决策赋能</p>
+            <div style="margin-top: 2rem;">
+                <a href="https://github.com/webleon/daily-stock-analysis-openclaw-skill" class="cta-button">⭐ Star on GitHub</a>
+                <a href="https://github.com/webleon/daily-stock-analysis-openclaw-skill/issues" class="cta-button cta-secondary">🐛 报告问题</a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.9rem; color: #999;">
+                ⚠️ 免责声明：本项目仅供参考，不构成投资建议。<br>股市有风险，投资需谨慎。
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with ❤️ by <a href="https://github.com/webleon">@webleon</a></p>
+        <p>Powered by <a href="https://github.com/openclaw/openclaw">OpenClaw</a></p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const sections = document.querySelectorAll('section');
+        const navDots = document.getElementById('navDots');
+
+        // Create navigation dots
+        sections.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'nav-dot' + (index === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                sections[index].scrollIntoView({ behavior: 'smooth' });
+            });
+            navDots.appendChild(dot);
+        });
+
+        // Observe sections
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Update nav dots
+                    const index = Array.from(sections).indexOf(entry.target);
+                    document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
