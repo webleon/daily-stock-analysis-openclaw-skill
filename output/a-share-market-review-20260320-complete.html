@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A 股大盘复盘报告 - 2026-03-20</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .header .date { font-size: 1.2rem; opacity: 0.8; }
+        .content { padding: 3rem; }
+        .section { margin-bottom: 3rem; }
+        .section-title {
+            font-size: 1.8rem;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        .summary-box h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .summary-box p { line-height: 1.8; opacity: 0.95; }
+        .indices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .index-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .index-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .index-name { font-size: 1.1rem; color: #4a5568; margin-bottom: 0.5rem; }
+        .index-value { font-size: 2rem; font-weight: bold; color: #1a202c; margin-bottom: 0.5rem; }
+        .index-change { font-size: 1.2rem; font-weight: 600; padding: 0.3rem 1rem; border-radius: 20px; display: inline-block; }
+        .index-change.up { background: #c6f6d5; color: #22543d; }
+        .index-change.down { background: #fed7d7; color: #742a2a; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-value { font-size: 1.8rem; font-weight: bold; color: #667eea; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.9rem; color: #718096; }
+        .sector-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        .sector-table th, .sector-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .sector-table th { background: #f7fafc; font-weight: 600; color: #4a5568; }
+        .sector-table tr:hover { background: #f7fafc; }
+        .sector-up { color: #22543d; font-weight: 600; }
+        .sector-down { color: #742a2a; font-weight: 600; }
+        .analysis-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .analysis-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .analysis-card h4 { font-size: 1.2rem; color: #1a202c; margin-bottom: 1rem; }
+        .analysis-card ul { list-style: none; padding-left: 0; }
+        .analysis-card li { padding: 0.5rem 0; color: #4a5568; line-height: 1.6; }
+        .analysis-card li::before { content: "• "; color: #667eea; font-weight: bold; }
+        .footer {
+            background: #1a202c;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+        .footer p { margin-bottom: 0.5rem; }
+        .disclaimer { font-size: 0.85rem; opacity: 0.7; margin-top: 1rem; }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .header { padding: 2rem 1rem; }
+            .header h1 { font-size: 1.8rem; }
+            .content { padding: 1.5rem; }
+            .section-title { font-size: 1.4rem; }
+            .indices-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 A 股大盘复盘报告</h1>
+            <div class="date">2026 年 3 月 20 日（星期五）</div>
+        </div>
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">📈 市场总结</h2>
+                <div class="summary-box">
+                    <h3>今日行情概览</h3>
+                    <p>
+                        今日 A 股市场整体呈现<strong>调整态势</strong>，三大指数集体收跌。上证指数下跌 1.24%，收于 3957.05 点；
+                        深证成指下跌 0.25%，收于 13866.20 点；创业板指下跌 0.52%，收于 2892.15 点；
+                        沪深 300 下跌 0.35%，收于 4567.02 点；科创 50 下跌 0.89%，收于 1089.33 点。
+                        市场成交量约 6530 亿元，板块轮动加快，防御性板块表现相对抗跌。
+                    </p>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">📊 主要指数</h2>
+                <div class="indices-grid">
+                    <div class="index-card">
+                        <div class="index-name">上证指数</div>
+                        <div class="index-value">3957.05</div>
+                        <div class="index-change down">↓ -1.24%</div>
+                    </div>
+                    <div class="index-card">
+                        <div class="index-name">深证成指</div>
+                        <div class="index-value">13866.20</div>
+                        <div class="index-change down">↓ -0.25%</div>
+                    </div>
+                    <div class="index-card">
+                        <div class="index-name">创业板指</div>
+                        <div class="index-value">2892.15</div>
+                        <div class="index-change down">↓ -0.52%</div>
+                    </div>
+                    <div class="index-card">
+                        <div class="index-name">沪深 300</div>
+                        <div class="index-value">4567.02</div>
+                        <div class="index-change down">↓ -0.35%</div>
+                    </div>
+                    <div class="index-card">
+                        <div class="index-name">科创 50</div>
+                        <div class="index-value">1089.33</div>
+                        <div class="index-change down">↓ -0.89%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">📉 市场统计</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">1250</div>
+                        <div class="stat-label">上涨家数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3580</div>
+                        <div class="stat-label">下跌家数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">35</div>
+                        <div class="stat-label">涨停家数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">28</div>
+                        <div class="stat-label">跌停家数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">6530 亿</div>
+                        <div class="stat-label">两市成交额</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">🔥 板块表现</h2>
+                <table class="sector-table">
+                    <thead>
+                        <tr>
+                            <th>领涨板块</th>
+                            <th>涨幅</th>
+                            <th>领跌板块</th>
+                            <th>跌幅</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sector-up">银行</td>
+                            <td class="sector-up">+1.85%</td>
+                            <td class="sector-down">半导体</td>
+                            <td class="sector-down">-2.34%</td>
+                        </tr>
+                        <tr>
+                            <td class="sector-up">保险</td>
+                            <td class="sector-up">+1.52%</td>
+                            <td class="sector-down">消费电子</td>
+                            <td class="sector-down">-1.98%</td>
+                        </tr>
+                        <tr>
+                            <td class="sector-up">煤炭</td>
+                            <td class="sector-up">+0.95%</td>
+                            <td class="sector-down">AI 应用</td>
+                            <td class="sector-down">-1.76%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="section">
+                <h2 class="section-title">💡 市场分析</h2>
+                <div class="analysis-cards">
+                    <div class="analysis-card">
+                        <h4>📊 技术面分析</h4>
+                        <ul>
+                            <li>上证指数跌破 4000 点整数关口，短期支撑位在 3900 点附近</li>
+                            <li>深证成指表现相对抗跌，在 13800 点附近获得支撑</li>
+                            <li>创业板指下跌 0.52%，科技股回调压力增大</li>
+                            <li>成交量萎缩至 6530 亿，市场观望情绪浓厚</li>
+                        </ul>
+                    </div>
+                    <div class="analysis-card">
+                        <h4>💰 资金面分析</h4>
+                        <ul>
+                            <li>北向资金净流出约 35 亿元，外资态度谨慎</li>
+                            <li>两市成交额较前一交易日萎缩约 800 亿</li>
+                            <li>防御性板块（银行/保险/煤炭）资金流入明显</li>
+                            <li>科技股（半导体/AI/消费电子）资金流出压力大</li>
+                        </ul>
+                    </div>
+                    <div class="analysis-card">
+                        <h4>📰 消息面分析</h4>
+                        <ul>
+                            <li>美联储货币政策预期影响市场风险偏好</li>
+                            <li>国内经济数据等待进一步验证</li>
+                            <li>行业政策面整体稳定，无重大利好/利空</li>
+                            <li>地缘政治因素仍需关注</li>
+                        </ul>
+                    </div>
+                    <div class="analysis-card">
+                        <h4>🎯 操作建议</h4>
+                        <ul>
+                            <li>控制仓位在 5-7 成，等待市场企稳信号</li>
+                            <li>关注业绩确定性强的蓝筹股（银行/保险/煤炭）</li>
+                            <li>避免追高，逢低布局优质标的</li>
+                            <li>科技股短期回调压力大，设置止损位控制风险</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2 class="section-title">⚠️ 风险提示</h2>
+                <div class="summary-box" style="background: linear-gradient(135deg, #fc8181 0%, #c53030 100%);">
+                    <h3>重要提醒</h3>
+                    <p>
+                        本报告仅供参考，不构成任何投资建议。股市有风险，投资需谨慎。
+                        请投资者根据自身风险承受能力，独立做出投资决策。
+                        市场数据可能存在延迟，请以交易所官方数据为准。
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>📊 Daily Stock Analysis for OpenClaw</p>
+            <p>生成时间：2026-03-20 21:30 (Asia/Shanghai)</p>
+            <p class="disclaimer">数据来源：Yahoo Finance, AkShare | 报告仅供参考，不构成投资建议</p>
+        </div>
+    </div>
+</body>
+</html>
