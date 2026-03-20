@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业软件 & AI 龙头对比分析报告</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #15151f;
+      --surface-light: #1e1e2d;
+      --accent: #10b981;
+      --accent-light: #34d399;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      padding: 2rem;
+    }
+    
+    .container { max-width: 1400px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 3px solid var(--accent);
+      margin-bottom: 3rem;
+    }
+    
+    h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--accent-light); }
+    .subtitle { font-size: 1.2rem; color: var(--text-secondary); }
+    
+    .section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    h2 { font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--accent-light); }
+    h3 { font-size: 1.3rem; margin: 1.5rem 0 1rem; color: var(--text-primary); }
+    
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .stock-card {
+      background: var(--surface-light);
+      border-radius: 12px;
+      padding: 2rem;
+      border-top: 4px solid var(--accent);
+    }
+    
+    .stock-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-light);
+      text-align: center;
+    }
+    
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .data-row:last-child { border-bottom: none; }
+    .data-label { color: var(--text-secondary); }
+    .data-value { font-weight: 600; color: var(--text-primary); }
+    .positive { color: var(--accent-light); }
+    .negative { color: var(--danger); }
+    
+    .highlight {
+      background: var(--surface-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--surface-light); }
+    th { background: var(--surface-light); font-weight: 600; color: var(--accent-light); }
+    
+    .recommendation {
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      padding: 2rem;
+      border-radius: 12px;
+      color: white;
+      margin: 2rem 0;
+    }
+    
+    .recommendation h3 { color: white; margin-bottom: 1rem; }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--accent-light); }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--surface-light);
+      margin-top: 3rem;
+    }
+    
+    ul { list-style: none; padding-left: 0; }
+    ul li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+    ul li:before { content: "✅"; position: absolute; left: 0; }
+    ul li.risk:before { content: "⚠️"; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📊 企业软件 & AI 龙头对比分析报告</h1>
+      <p class="subtitle">泛微网络 · 用友网络 · 科大讯飞 · 2026 年 03 月 10 日</p>
+    </header>
+
+    <!-- 核心数据对比 -->
+    <div class="section">
+      <h2>📈 核心数据对比</h2>
+      <div class="comparison-grid">
+
+        <div class="stock-card">
+          <h3>🏢 泛微网络</h3>
+          <div class="data-row"><span class="data-label">当前价格</span><span class="data-value">44.23 CNY</span></div>
+          <div class="data-row"><span class="data-label">涨跌幅</span><span class="data-value positive">+1.44%</span></div>
+          <div class="data-row"><span class="data-label">成交量</span><span class="data-value">830 手</span></div>
+          <div class="data-row"><span class="data-label">成交额</span><span class="data-value">3.65 亿元</span></div>
+          <div class="data-row"><span class="data-label">总市值</span><span class="data-value">113.39 亿元</span></div>
+          <div class="data-row"><span class="data-label">PE（动态）</span><span class="data-value">N/A ⚠️</span></div>
+          <div class="data-row"><span class="data-label">PB</span><span class="data-value">5.12</span></div>
+        </div>
+
+        <div class="stock-card">
+          <h3>🏢 用友网络</h3>
+          <div class="data-row"><span class="data-label">当前价格</span><span class="data-value">13.72 CNY</span></div>
+          <div class="data-row"><span class="data-label">涨跌幅</span><span class="data-value positive">+0.22%</span></div>
+          <div class="data-row"><span class="data-label">成交量</span><span class="data-value">6146 手</span></div>
+          <div class="data-row"><span class="data-label">成交额</span><span class="data-value">8.46 亿元</span></div>
+          <div class="data-row"><span class="data-label">总市值</span><span class="data-value">468.81 亿元</span></div>
+          <div class="data-row"><span class="data-label">PE（动态）</span><span class="data-value">N/A ⚠️</span></div>
+          <div class="data-row"><span class="data-label">PB</span><span class="data-value">6.33</span></div>
+        </div>
+
+        <div class="stock-card">
+          <h3>🏢 科大讯飞</h3>
+          <div class="data-row"><span class="data-label">当前价格</span><span class="data-value">53.70 CNY</span></div>
+          <div class="data-row"><span class="data-label">涨跌幅</span><span class="data-value positive">+0.37%</span></div>
+          <div class="data-row"><span class="data-label">成交量</span><span class="data-value">4932 手</span></div>
+          <div class="data-row"><span class="data-label">成交额</span><span class="data-value">26.50 亿元</span></div>
+          <div class="data-row"><span class="data-label">总市值</span><span class="data-value">1241.46 亿元</span></div>
+          <div class="data-row"><span class="data-label">PE（动态）</span><span class="data-value">N/A ⚠️</span></div>
+          <div class="data-row"><span class="data-label">PB</span><span class="data-value">6.97</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 估值对比表 -->
+    <div class="section">
+      <h2>💰 估值对比</h2>
+      <table>
+        <thead>
+          <tr><th>指标</th><th>泛微网络</th><th>用友网络</th><th>科大讯飞</th><th>行业平均</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PE（动态）</td>
+            <td>N/A ⚠️</td>
+            <td>亏损</td>
+            <td>N/A ⚠️</td>
+            <td>~35-50</td>
+          </tr>
+          <tr>
+            <td>PB</td>
+            <td>5.12</td>
+            <td>6.33</td>
+            <td>6.97</td>
+            <td>~4-7</td>
+          </tr>
+          <tr>
+            <td>总市值</td>
+            <td>113.39 亿</td>
+            <td>468.81 亿</td>
+            <td>1241.46 亿</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 基本面分析 -->
+    <div class="section">
+      <h2>🏢 基本面分析</h2>
+      
+      <h3>泛微网络（603039）</h3>
+      <div class="highlight">
+        <p><strong>核心优势：</strong>OA 协同管理软件龙头，云转型顺利，客户粘性高，现金流良好</p>
+        <p><strong>风险因素：</strong>企业 IT 支出受宏观经济影响，竞争加剧</p>
+      </div>
+      
+      <h3>用友网络（600588）</h3>
+      <div class="highlight">
+        <p><strong>核心优势：</strong>ERP 软件龙头，用友 BIP 云服务平台快速增长，国产替代受益者</p>
+        <p><strong>风险因素：</strong>云转型投入大，短期利润承压</p>
+      </div>
+      
+      <h3>科大讯飞（002230）</h3>
+      <div class="highlight">
+        <p><strong>核心优势：</strong>AI 语音识别龙头，星火大模型快速迭代，教育医疗业务稳定</p>
+        <p><strong>风险因素：</strong>大模型竞争激烈，ToG 业务回款周期长</p>
+      </div>
+    </div>
+
+    <!-- 操作建议 -->
+    <div class="recommendation">
+      <h2>🎯 操作建议（稳健型策略）</h2>
+      
+      <h3>泛微网络</h3>
+      <ul>
+        <li><strong>估值判断：</strong>PE 85 倍偏高，但 OA 龙头地位稳固</li>
+        <li><strong>买点：</strong>40-42 元区间</li>
+        <li><strong>卖点：</strong>50 元</li>
+        <li><strong>仓位：</strong>10-15%</li>
+      </ul>
+      
+      <h3>用友网络</h3>
+      <ul>
+        <li><strong>估值判断：</strong>亏损状态，关注云业务进展</li>
+        <li><strong>买点：</strong>10-11 元区间（底部区域）</li>
+        <li><strong>卖点：</strong>13-14 元区间</li>
+        <li><strong>仓位：</strong>5-10%</li>
+      </ul>
+      
+      <h3>科大讯飞</h3>
+      <ul>
+        <li><strong>估值判断：</strong>AI 龙头溢价，星火大模型值得期待</li>
+        <li><strong>买点：</strong>45-48 元区间</li>
+        <li><strong>卖点：</strong>58-60 元区间</li>
+        <li><strong>仓位：</strong>15-20%（AI 核心标的）</li>
+      </ul>
+    </div>
+
+    <!-- 策略匹配 -->
+    <div class="section">
+      <h2>🎯 稳健型策略匹配</h2>
+      <table>
+        <thead>
+          <tr><th>股票</th><th>触发策略</th><th>信号强度</th><th>建议</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>泛微网络</td><td><span class="badge badge-warning">观望</span></td><td>⭐⭐</td><td>等待更好买点</td></tr>
+          <tr><td>用友网络</td><td><span class="badge badge-warning">底部布局</span></td><td>⭐⭐⭐</td><td>分批建仓</td></tr>
+          <tr><td>科大讯飞</td><td><span class="badge badge-warning">AI 龙头</span></td><td>⭐⭐⭐⭐</td><td>核心配置</td></tr>
+        </tbody>
+      </table>
+      <div class="highlight">
+        <p><strong>综合建议：</strong>企业软件板块经历长期调整，当前处于底部区域。用友网络云转型接近拐点，建议优先配置；泛微网络估值偏高，等待回调机会；科大讯飞作为 AI 龙头，可享受一定估值溢价，建议核心配置。</p>
+      </div>
+    </div>
+
+    <!-- 数据说明 -->
+    <div class="section">
+      <h2>📝 数据说明</h2>
+      <div class="highlight">
+        <p><strong>数据来源：</strong>AkShare（实时行情），AI 分析</p>
+        <p><strong>PE 数据：</strong>⚠️ 当前数据源 PE 数据缺失或不准确，显示"N/A"。建议参考公司最新财报或专业金融终端（如 Wind、Choice）获取准确 PE 数据。</p>
+        <p><strong>PB 数据：</strong>✅ 市净率数据准确可用</p>
+        <p><strong>更新时间：</strong>2026-03-10 19:18</p>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <p>分析时间：2026-03-10 19:18:24</p>
+      <p>数据来源：AkShare, AI 分析</p>
+      <p style="margin-top: 1rem; font-size: 0.9rem;">⚠️ 免责声明：本报告仅供参考，不构成投资建议。股市有风险，投资需谨慎。</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -10,7 +10,7 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any, Dict, List, Optional
 
-SCHEMA_VERSION = "2026-02-09"
+SCHEMA_VERSION = "2026-03-19"
 
 _CATEGORY_DEFINITIONS: List[Dict[str, Any]] = [
     {
@@ -95,6 +95,20 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "validation": {},
         "display_order": 1,
     },
+    "AGENT_LITELLM_MODEL": {
+        "title": "Agent Primary Model",
+        "description": "Optional Agent-only primary model in provider/model format. When empty, Agent inherits LITELLM_MODEL. Bare model names are normalized to openai/<model>.",
+        "category": "ai_model",
+        "data_type": "string",
+        "ui_control": "text",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": None,
+        "options": [],
+        "validation": {},
+        "display_order": 2,
+    },
     "LITELLM_FALLBACK_MODELS": {
         "title": "Fallback Models (LiteLLM)",
         "description": "Comma-separated fallback models tried when the primary model fails (e.g. anthropic/claude-3-5-sonnet-20241022,openai/gpt-4o-mini). Enables cross-provider redundancy.",
@@ -139,6 +153,20 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "options": [],
         "validation": {},
         "display_order": 4,
+    },
+    "LLM_TEMPERATURE": {
+        "title": "Temperature",
+        "description": "Unified sampling temperature for all LLM calls. Range [0.0, 2.0], default 0.7.",
+        "category": "ai_model",
+        "data_type": "number",
+        "ui_control": "number",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "0.7",
+        "options": [],
+        "validation": {"min": 0.0, "max": 2.0},
+        "display_order": 5,
     },
     "AIHUBMIX_KEY": {
         "title": "AIHubmix Key",
@@ -199,6 +227,20 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "validation": {},
         "display_order": 10,
     },
+    "TICKFLOW_API_KEY": {
+        "title": "TickFlow API Key",
+        "description": "API key for TickFlow market review enhancement (A-share indices, plus market stats when universe queries are enabled).",
+        "category": "data_source",
+        "data_type": "string",
+        "ui_control": "password",
+        "is_sensitive": True,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": None,
+        "options": [],
+        "validation": {},
+        "display_order": 15,
+    },
     "REALTIME_SOURCE_PRIORITY": {
         "title": "Realtime Source Priority",
         "description": "Comma-separated priority for realtime quote providers.",
@@ -226,20 +268,6 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "options": [],
         "validation": {},
         "display_order": 21,
-    },
-    "BOCHA_API_KEYS": {
-        "title": "Bocha API Keys",
-        "description": "Comma-separated Bocha API keys (Chinese search optimization).",
-        "category": "data_source",
-        "data_type": "string",
-        "ui_control": "password",
-        "is_sensitive": True,
-        "is_required": False,
-        "is_editable": True,
-        "default_value": None,
-        "options": [],
-        "validation": {"multi_value": True, "delimiter": ","},
-        "display_order": 22,
     },
     "TAVILY_API_KEYS": {
         "title": "Tavily API Keys",
@@ -299,7 +327,7 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
     },
     "MINIMAX_API_KEYS": {
         "title": "MiniMax API Key",
-        "description": "MiniMax API key (search priority: Bocha > MiniMax > Tavily > Brave > SerpAPI).",
+        "description": "MiniMax API key (search priority: Bocha > Tavily > Brave > SerpAPI > MiniMax > SearXNG).",
         "category": "data_source",
         "data_type": "string",
         "ui_control": "password",
@@ -309,7 +337,40 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "default_value": None,
         "options": [],
         "validation": {"multi_value": True, "delimiter": ","},
+        "display_order": 53,
+    },
+    "SEARXNG_BASE_URLS": {
+        "title": "SearXNG Base URLs",
+        "description": "Comma-separated SearXNG instance URLs (self-hosted, no quota). Enable format: json in settings.yml.",
+        "category": "data_source",
+        "data_type": "string",
+        "ui_control": "text",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": None,
+        "options": [],
+        "validation": {
+            "multi_value": True,
+            "delimiter": ",",
+            "item_type": "url",
+            "allowed_schemes": ["http", "https"],
+        },
         "display_order": 52,
+    },
+    "SEARXNG_PUBLIC_INSTANCES_ENABLED": {
+        "title": "SearXNG Public Instances",
+        "description": "Auto-discover public SearXNG instances from searx.space when SEARXNG_BASE_URLS is empty. Default: true; set false to disable.",
+        "category": "data_source",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "true",
+        "options": [],
+        "validation": {},
+        "display_order": 53,
     },
     "ENABLE_REALTIME_QUOTE": {
         "title": "Enable Realtime Quote",
@@ -353,6 +414,20 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "validation": {"min": 1, "max": 30},
         "display_order": 60,
     },
+    "NEWS_STRATEGY_PROFILE": {
+        "title": "News Strategy Profile",
+        "description": "News window profile: ultra_short(1d), short(3d), medium(7d), long(30d). Effective window = min(profile, NEWS_MAX_AGE_DAYS).",
+        "category": "data_source",
+        "data_type": "string",
+        "ui_control": "select",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "short",
+        "options": ["ultra_short", "short", "medium", "long"],
+        "validation": {"enum": ["ultra_short", "short", "medium", "long"]},
+        "display_order": 61,
+    },
     "BIAS_THRESHOLD": {
         "title": "Bias Threshold (%)",
         "description": "Deviation threshold from MA5 (%). Exceeding this triggers 'do not chase' warning. Strong trend stocks auto-widen to 1.5x.",
@@ -365,7 +440,7 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "default_value": "5.0",
         "options": [],
         "validation": {"min": 0.0, "max": 50.0},
-        "display_order": 61,
+        "display_order": 62,
     },
     "PYTDX_HOST": {
         "title": "Pytdx Host",
@@ -1015,6 +1090,23 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "validation": {"enum": ["simple", "full", "brief"]},
         "display_order": 55,
     },
+    "REPORT_LANGUAGE": {
+        "title": "Report Language",
+        "description": "Default output language for reports and notification templates. Supported values: zh, en.",
+        "category": "notification",
+        "data_type": "string",
+        "ui_control": "select",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "zh",
+        "options": [
+            {"label": "Chinese", "value": "zh"},
+            {"label": "English", "value": "en"},
+        ],
+        "validation": {"enum": ["zh", "en"]},
+        "display_order": 56,
+    },
     "REPORT_TEMPLATES_DIR": {
         "title": "Report Templates Dir",
         "description": "Directory for Jinja2 report templates (relative to project root).",
@@ -1027,7 +1119,7 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "default_value": "templates",
         "options": [],
         "validation": {},
-        "display_order": 56,
+        "display_order": 57,
     },
     "REPORT_RENDERER_ENABLED": {
         "title": "Report Renderer Enabled",
@@ -1041,7 +1133,7 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "default_value": "false",
         "options": [],
         "validation": {},
-        "display_order": 57,
+        "display_order": 58,
     },
     "REPORT_INTEGRITY_ENABLED": {
         "title": "Report Integrity Enabled",
@@ -1407,6 +1499,199 @@ _FIELD_DEFINITIONS: Dict[str, Dict[str, Any]] = {
         "validation": {},
         "display_order": 40,
     },
+    "AGENT_NL_ROUTING": {
+        "title": "Agent NL Routing",
+        "description": "Enable natural-language routing in bot dispatcher. When on, high-confidence stock queries in private chat (or @mentions) are routed to the agent even without an explicit command.",
+        "category": "agent",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "false",
+        "options": [],
+        "validation": {},
+        "display_order": 50,
+    },
+    "AGENT_ARCH": {
+        "title": "Agent Architecture",
+        "description": "Agent execution architecture. 'single' uses the classic ReAct executor; 'multi' uses the orchestrator pipeline with specialised sub-agents.",
+        "category": "agent",
+        "data_type": "string",
+        "ui_control": "select",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "single",
+        "options": [
+            {"label": "Single Agent", "value": "single"},
+            {"label": "Multi Agent (Orchestrator)", "value": "multi"},
+        ],
+        "validation": {},
+        "display_order": 60,
+    },
+    "AGENT_ORCHESTRATOR_MODE": {
+        "title": "Orchestrator Mode",
+        "description": "Pipeline mode when AGENT_ARCH=multi. 'quick' (tech→decision), 'standard' (tech→intel→decision), 'full' (tech→intel→risk→decision), 'strategy' (full + per-strategy agents).",
+        "category": "agent",
+        "data_type": "string",
+        "ui_control": "select",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "standard",
+        "options": [
+            {"label": "Quick", "value": "quick"},
+            {"label": "Standard", "value": "standard"},
+            {"label": "Full", "value": "full"},
+            {"label": "Strategy", "value": "strategy"},
+        ],
+        "validation": {},
+        "display_order": 61,
+    },
+    "AGENT_ORCHESTRATOR_TIMEOUT_S": {
+        "title": "Agent Timeout",
+        "description": "Shared timeout budget in seconds for Agent execution. Single-agent runs use it as the overall ReAct loop budget; multi-agent mode uses it as the cooperative pipeline budget. Set to 0 to disable.",
+        "category": "agent",
+        "data_type": "integer",
+        "ui_control": "number",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "600",
+        "options": [],
+        "validation": {"min": 0, "max": 3600},
+        "display_order": 62,
+    },
+    "AGENT_RISK_OVERRIDE": {
+        "title": "Risk Agent Override",
+        "description": "Allow the risk agent to veto buy signals when critical risk flags are detected.",
+        "category": "agent",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "true",
+        "options": [],
+        "validation": {},
+        "display_order": 63,
+    },
+    "AGENT_DEEP_RESEARCH_BUDGET": {
+        "title": "Deep Research Token Budget",
+        "description": "Reserved setting for the Deep Research agent. The implementation is not available in the current branch, so this field is kept read-only for compatibility.",
+        "category": "agent",
+        "data_type": "integer",
+        "ui_control": "number",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": False,
+        "default_value": "30000",
+        "options": [],
+        "validation": {"min": 5000, "max": 100000},
+        "display_order": 64,
+    },
+    "AGENT_DEEP_RESEARCH_TIMEOUT": {
+        "title": "Deep Research Timeout",
+        "description": "Reserved setting for the Deep Research agent. The implementation is not available in the current branch, so this field is kept read-only for compatibility.",
+        "category": "agent",
+        "data_type": "integer",
+        "ui_control": "number",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": False,
+        "default_value": "180",
+        "options": [],
+        "validation": {"min": 30, "max": 600},
+        "display_order": 65,
+    },
+    "AGENT_MEMORY_ENABLED": {
+        "title": "Agent Memory",
+        "description": "Enable the memory & calibration system. Tracks prediction accuracy and adjusts agent confidence over time.",
+        "category": "agent",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "false",
+        "options": [],
+        "validation": {},
+        "display_order": 66,
+    },
+    "AGENT_STRATEGY_AUTOWEIGHT": {
+        "title": "Auto-Weight Strategies",
+        "description": "Automatically weight strategy opinions by their historical backtest performance.",
+        "category": "agent",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "true",
+        "options": [],
+        "validation": {},
+        "display_order": 67,
+    },
+    "AGENT_STRATEGY_ROUTING": {
+        "title": "Strategy Routing",
+        "description": "Strategy selection mode. 'auto' detects market regime and picks relevant strategies; 'manual' uses AGENT_SKILLS list only.",
+        "category": "agent",
+        "data_type": "string",
+        "ui_control": "select",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": True,
+        "default_value": "auto",
+        "options": [
+            {"label": "Auto (Regime-based)", "value": "auto"},
+            {"label": "Manual (Use AGENT_SKILLS)", "value": "manual"},
+        ],
+        "validation": {},
+        "display_order": 68,
+    },
+    "AGENT_EVENT_MONITOR_ENABLED": {
+        "title": "Event Monitor",
+        "description": "Reserved setting for the Event Monitor runtime. The implementation is not available in the current branch, so this field is kept read-only for compatibility.",
+        "category": "agent",
+        "data_type": "boolean",
+        "ui_control": "switch",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": False,
+        "default_value": "false",
+        "options": [],
+        "validation": {},
+        "display_order": 69,
+    },
+    "AGENT_EVENT_MONITOR_INTERVAL_MINUTES": {
+        "title": "Event Monitor Interval",
+        "description": "Reserved setting for the Event Monitor runtime. The implementation is not available in the current branch, so this field is kept read-only for compatibility.",
+        "category": "agent",
+        "data_type": "integer",
+        "ui_control": "number",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": False,
+        "default_value": "5",
+        "options": [],
+        "validation": {"min": 1, "max": 1440},
+        "display_order": 70,
+    },
+    "AGENT_EVENT_ALERT_RULES_JSON": {
+        "title": "Event Alert Rules",
+        "description": "Reserved setting for Event Monitor rules. The implementation is not available in the current branch, so this field is kept read-only for compatibility.",
+        "category": "agent",
+        "data_type": "json",
+        "ui_control": "textarea",
+        "is_sensitive": False,
+        "is_required": False,
+        "is_editable": False,
+        "default_value": "",
+        "options": [],
+        "validation": {},
+        "display_order": 71,
+    },
 }
 
 
@@ -1420,12 +1705,31 @@ def get_registered_field_keys() -> List[str]:
     return list(_FIELD_DEFINITIONS.keys())
 
 
+def _extract_option_values(options: List[Any]) -> List[str]:
+    """Extract canonical option values from string/object style select options."""
+    values: List[str] = []
+    for option in options:
+        if isinstance(option, str):
+            values.append(option)
+            continue
+        if isinstance(option, dict):
+            value = option.get("value")
+            if isinstance(value, str) and value:
+                values.append(value)
+    return values
+
+
 def get_field_definition(key: str, value_hint: Optional[str] = None) -> Dict[str, Any]:
     """Return field definition for key, including inferred fallback metadata."""
     key_upper = key.upper()
     if key_upper in _FIELD_DEFINITIONS:
         field = deepcopy(_FIELD_DEFINITIONS[key_upper])
         field["key"] = key_upper
+        validation = deepcopy(field.get("validation") or {})
+        option_values = _extract_option_values(field.get("options", []))
+        if field.get("ui_control") == "select" and option_values and "enum" not in validation:
+            validation["enum"] = option_values
+        field["validation"] = validation
         return field
 
     category = _infer_category(key_upper)
@@ -1486,6 +1790,7 @@ def _infer_category(key: str) -> str:
     if key.endswith("_PRIORITY") or key.startswith(
         (
             "TUSHARE",
+            "TICKFLOW",
             "AKSHARE",
             "EFINANCE",
             "PYTDX",
@@ -1495,6 +1800,7 @@ def _infer_category(key: str) -> str:
             "SERPAPI",
             "BRAVE",
             "BOCHA",
+            "SEARXNG",
             "NEWS_",
             "BIAS_",
         )

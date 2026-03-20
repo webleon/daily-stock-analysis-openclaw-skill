@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科大讯飞（002230）深度分析报告</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #15151f;
+      --surface-light: #1e1e2d;
+      --accent: #10b981;
+      --accent-light: #34d399;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0b0;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      padding: 2rem;
+    }
+    
+    .container { max-width: 1000px; margin: 0 auto; }
+    
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 3px solid var(--accent);
+      margin-bottom: 3rem;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--accent-light);
+    }
+    
+    .subtitle { font-size: 1.2rem; color: var(--text-secondary); }
+    
+    .section {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--accent);
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent-light);
+    }
+    
+    h3 { font-size: 1.3rem; margin: 1.5rem 0 1rem; color: var(--text-primary); }
+    
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .data-card {
+      background: var(--surface-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .data-card .label { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .data-card .value { font-size: 1.5rem; font-weight: 700; color: var(--accent-light); }
+    
+    .highlight {
+      background: var(--surface-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--accent);
+    }
+    
+    .recommendation {
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      padding: 2rem;
+      border-radius: 12px;
+      color: white;
+      margin: 2rem 0;
+    }
+    
+    .recommendation h3 { color: white; }
+    
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.85rem;
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--warning);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--surface-light);
+      margin-top: 3rem;
+    }
+    
+    ul { list-style: none; padding-left: 0; }
+    ul li { padding: 0.5rem 0; padding-left: 1.5rem; position: relative; }
+    ul li:before { content: "✅"; position: absolute; left: 0; }
+    ul li.risk:before { content: "⚠️"; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎤 科大讯飞（002230）深度分析报告</h1>
+      <p class="subtitle">AI 语音龙头 · 星火大模型 · 2026 年 03 月 11 日</p>
+      <p><span class="badge">⚠️ 非交易时间，数据基于昨收</span></p>
+    </header>
+
+    <!-- 核心数据 -->
+    <div class="section">
+      <h2>📊 核心数据</h2>
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="label">当前价格</div>
+          <div class="value">53.68 CNY</div>
+        </div>
+        <div class="data-card">
+          <div class="label">涨跌幅</div>
+          <div class="value" style="color: var(--danger)">-0.04%</div>
+        </div>
+        <div class="data-card">
+          <div class="label">总市值</div>
+          <div class="value">1241.00 亿</div>
+        </div>
+        <div class="data-card">
+          <div class="label">PB</div>
+          <div class="value">6.97</div>
+        </div>
+        <div class="data-card">
+          <div class="label">PE（动态）</div>
+          <div class="value" style="font-size: 1.2rem;">N/A</div>
+        </div>
+        <div class="data-card">
+          <div class="label">成交量</div>
+          <div class="value">31 手</div>
+        </div>
+      </div>
+      <div class="highlight" style="margin-top: 1rem;"><p>⚠️ 当前为非交易时间，部分数据基于昨日收盘价。成交量、成交额等数据为昨日数据。</p></div>
+    </div>
+
+    <!-- 基本面分析 -->
+    <div class="section">
+      <h2>🏢 基本面分析</h2>
+      
+      <h3>核心优势</h3>
+      <div class="highlight">
+        <ul>
+          <li>AI 语音识别龙头，技术壁垒高</li>
+          <li>星火大模型快速迭代，应用场景丰富</li>
+          <li>教育、医疗等 ToG 业务稳定</li>
+          <li>研发投入持续，专利数量领先</li>
+        </ul>
+      </div>
+      
+      <h3>风险因素</h3>
+      <div class="highlight">
+        <ul class="risk">
+          <li>大模型竞争激烈（百度、阿里等）</li>
+          <li>ToG 业务回款周期长</li>
+          <li>研发投入影响短期利润</li>
+          <li>PE 数据缺失，估值难以判断</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 技术面分析 -->
+    <div class="section">
+      <h2>📉 技术面分析</h2>
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="label">52 周最高</div>
+          <div class="value">~70 元</div>
+        </div>
+        <div class="data-card">
+          <div class="label">52 周最低</div>
+          <div class="value">~35 元</div>
+        </div>
+        <div class="data-card">
+          <div class="label">当前位置</div>
+          <div class="value">中位</div>
+        </div>
+        <div class="data-card">
+          <div class="label">趋势</div>
+          <div class="value">震荡</div>
+        </div>
+      </div>
+      
+      <div class="highlight">
+        <p><strong>支撑位：</strong>45-48 元区间</p>
+        <p><strong>压力位：</strong>58-60 元区间</p>
+      </div>
+    </div>
+
+    <!-- 估值分析 -->
+    <div class="section">
+      <h2>💰 估值分析</h2>
+      <div class="highlight">
+        <p><strong>PE（动态）：</strong>N/A</p>
+        <p><strong>说明：</strong>PE 数据缺失，无法准确判断估值水平。</p>
+        <ul>
+          <li>查阅公司最新财报获取净利润数据</li>
+          <li>使用专业金融终端（Wind/Choice）</li>
+          <li>配置 Tushare Pro 数据源（需要 120 积分）</li>
+        </ul>
+        <p style="margin-top: 1rem;"><strong>PB：</strong>6.97（处于行业中高位）</p>
+      </div>
+    </div>
+
+    <!-- 操作建议 -->
+    <div class="recommendation">
+      <h2>🎯 操作建议（稳健型策略）</h2>
+      
+      <h3>估值判断</h3>
+      <p>AI 龙头溢价，星火大模型值得期待。但 PE 数据缺失，建议等待数据源恢复或配置 Tushare。</p>
+      
+      <h3>买点</h3>
+      <p><strong>45-48 元区间</strong>（技术支撑位 + 合理估值区间）</p>
+      
+      <h3>卖点</h3>
+      <p><strong>58-60 元区间</strong>（前期压力位）</p>
+      
+      <h3>止损</h3>
+      <p><strong>42 元</strong>（跌破重要支撑）</p>
+      
+      <h3>仓位建议</h3>
+      <p><strong>15-20%</strong>（AI 核心标的，可享受一定估值溢价）</p>
+    </div>
+
+    <!-- 策略匹配 -->
+    <div class="section">
+      <h2>🎯 稳健型策略匹配</h2>
+      <div class="highlight">
+        <p><strong>触发策略：</strong><span style="background: rgba(16, 185, 129, 0.2); color: var(--accent-light); padding: 0.25rem 0.75rem; border-radius: 100px;">AI 龙头</span></p>
+        <p><strong>信号强度：</strong>⭐⭐⭐⭐</p>
+        <p><strong>建议：</strong>核心配置</p>
+        <p style="margin-top: 1rem;"><strong>综合建议：</strong>科大讯飞作为 AI 语音龙头，星火大模型快速迭代，应用场景丰富。虽然 PE 数据缺失，但长期价值值得关注。建议逢低分批建仓，作为 AI 核心标的配置。</p>
+      </div>
+    </div>
+
+    <!-- 数据说明 -->
+    <div class="section">
+      <h2>📝 数据说明</h2>
+      <div class="highlight">
+        <p><strong>数据来源：</strong>AkShare（实时行情），AI 分析</p>
+        <p><strong>交易时间：</strong>❌ 否（非交易时间，数据基于昨收）</p>
+        <p><strong>PE 数据：</strong>⚠️ 当前数据源 PE 数据缺失。建议参考公司最新财报或专业金融终端获取准确 PE 数据。</p>
+        <p><strong>PB 数据：</strong>✅ 市净率数据准确可用</p>
+        <p><strong>更新时间：</strong>2026-03-11 09:29</p>
+        <p style="margin-top: 1rem;"><strong>配置 Tushare：</strong>详见 docs/数据源配置说明.md</p>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <p>分析时间：2026-03-11 09:29:55</p>
+      <p>数据来源：AkShare, AI 分析</p>
+      <p style="margin-top: 1rem; font-size: 0.9rem;">⚠️ 免责声明：本报告仅供参考，不构成投资建议。股市有风险，投资需谨慎。</p>
+    </footer>
+  </div>
+</body>
+</html>

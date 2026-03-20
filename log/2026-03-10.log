@@ -1,0 +1,128 @@
+[2026-03-10 18:08:35] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:08:35] 🔍 检查依赖...
+[2026-03-10 18:08:35] ✅ 依赖检查完成
+[2026-03-10 18:08:35] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 17, in <module>
+    from src.analyzer import AnalysisResult
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/analyzer.py", line 20, in <module>
+    from json_repair import repair_json
+ModuleNotFoundError: No module named 'json_repair'
+[2026-03-10 18:08:35] === 股票分析完成 ===
+[2026-03-10 18:09:09] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:09:09] 🔍 检查依赖...
+[2026-03-10 18:09:09] ✅ 依赖检查完成
+[2026-03-10 18:09:09] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 17, in <module>
+    from src.analyzer import AnalysisResult
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/analyzer.py", line 25, in <module>
+    from src.storage import persist_llm_usage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/storage.py", line 24, in <module>
+    from sqlalchemy import (
+    ...<17 lines>...
+    )
+ModuleNotFoundError: No module named 'sqlalchemy'
+[2026-03-10 18:09:09] === 股票分析完成 ===
+[2026-03-10 18:10:18] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:10:18] 🔍 检查依赖...
+[2026-03-10 18:10:18] ✅ 依赖检查完成
+[2026-03-10 18:10:18] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 19, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+ModuleNotFoundError: No module named 'bot'
+[2026-03-10 18:10:18] === 股票分析完成 ===
+[2026-03-10 18:12:06] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:12:06] 🔍 检查依赖...
+[2026-03-10 18:12:06] ✅ 依赖检查完成
+[2026-03-10 18:12:06] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 19, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/data_provider/__init__.py", line 33, in <module>
+    from .efinance_fetcher import EfinanceFetcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/data_provider/efinance_fetcher.py", line 42, in <module>
+    from patch.eastmoney_patch import eastmoney_patch
+ModuleNotFoundError: No module named 'patch'
+[2026-03-10 18:12:06] === 股票分析完成 ===
+[2026-03-10 18:12:23] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:12:23] 🔍 检查依赖...
+[2026-03-10 18:12:23] ✅ 依赖检查完成
+[2026-03-10 18:12:23] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 19, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/data_provider/__init__.py", line 33, in <module>
+    from .efinance_fetcher import EfinanceFetcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/data_provider/efinance_fetcher.py", line 42, in <module>
+    from patch.eastmoney_patch import eastmoney_patch
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/patch/eastmoney_patch.py", line 10, in <module>
+    from fake_useragent import UserAgent
+ModuleNotFoundError: No module named 'fake_useragent'
+[2026-03-10 18:12:23] === 股票分析完成 ===
+[2026-03-10 18:12:39] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:12:39] 🔍 检查依赖...
+[2026-03-10 18:12:39] ✅ 依赖检查完成
+[2026-03-10 18:12:39] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 19, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification.py", line 27, in <module>
+    from src.notification_sender import (
+    ...<11 lines>...
+    )
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification_sender/__init__.py", line 10, in <module>
+    from .astrbot_sender import AstrbotSender
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/notification_sender/astrbot_sender.py", line 15, in <module>
+    from src.formatters import markdown_to_html_document
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/formatters.py", line 13, in <module>
+    import markdown2
+ModuleNotFoundError: No module named 'markdown2'
+[2026-03-10 18:12:39] === 股票分析完成 ===
+[2026-03-10 18:13:14] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:13:14] 🔍 检查依赖...
+[2026-03-10 18:13:14] ✅ 依赖检查完成
+[2026-03-10 18:13:14] 📈 分析股票：AAPL
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/analyzer_service.py", line 21, in <module>
+    from src.core.pipeline import StockAnalysisPipeline
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/core/pipeline.py", line 31, in <module>
+    from src.search_service import SearchService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/src/search_service.py", line 23, in <module>
+    from newspaper import Article, Config
+ModuleNotFoundError: No module named 'newspaper'
+[2026-03-10 18:13:14] === 股票分析完成 ===
+[2026-03-10 18:20:08] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:20:08] 🔍 检查依赖...
+[2026-03-10 18:20:08] ✅ 依赖检查完成
+[2026-03-10 18:20:08] 📈 分析股票：AAPL
+[2026-03-10 18:20:08] === 股票分析完成 ===
+[2026-03-10 18:33:45] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis/.env
+[2026-03-10 18:33:45] === Daily Stock Analysis 开始 ===
+[2026-03-10 18:33:45] 🔍 检查依赖...
+[2026-03-10 18:33:45] ✅ 依赖检查完成
+[2026-03-10 18:33:45] 📈 分析股票：hk00700
+[2026-03-10 18:33:45] === 股票分析完成 ===

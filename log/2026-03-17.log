@@ -1,0 +1,298 @@
+[2026-03-17 10:27:31] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:27:31] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:27:31] 🔍 检查依赖...
+[2026-03-17 10:27:31] ✅ 依赖检查完成
+[2026-03-17 10:27:31] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 17, in <module>
+    from src.config import get_config
+ModuleNotFoundError: No module named 'src'
+[2026-03-17 10:27:31] === 大盘复盘完成 ===
+[2026-03-17 10:27:50] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:27:50] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:27:50] 🔍 检查依赖...
+[2026-03-17 10:27:50] ✅ 依赖检查完成
+[2026-03-17 10:27:50] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 18, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/__init__.py", line 32, in <module>
+    from .base import BaseFetcher, DataFetcherManager
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/base.py", line 1162
+    def _run_with_retry(
+    ^^^
+SyntaxError: invalid syntax
+[2026-03-17 10:27:50] === 大盘复盘完成 ===
+[2026-03-17 10:28:25] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:28:25] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:28:25] 🔍 检查依赖...
+[2026-03-17 10:28:25] ✅ 依赖检查完成
+[2026-03-17 10:28:25] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 18, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/__init__.py", line 32, in <module>
+    from .base import BaseFetcher, DataFetcherManager
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/base.py", line 1334
+    def get_fundamental_context(
+    ^^^
+SyntaxError: invalid syntax
+[2026-03-17 10:28:25] === 大盘复盘完成 ===
+[2026-03-17 10:28:47] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:28:47] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:28:47] 🔍 检查依赖...
+[2026-03-17 10:28:47] ✅ 依赖检查完成
+[2026-03-17 10:28:47] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 18, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/__init__.py", line 32, in <module>
+    from .base import BaseFetcher, DataFetcherManager
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/base.py", line 1510
+    result_ctx["dragon_tiger"] = self._build_fundamental_block(
+                                                              ^
+SyntaxError: '(' was never closed
+[2026-03-17 10:28:47] === 大盘复盘完成 ===
+[2026-03-17 10:29:11] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:29:11] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:29:11] 🔍 检查依赖...
+[2026-03-17 10:29:11] ✅ 依赖检查完成
+[2026-03-17 10:29:11] 📊 执行大盘复盘 (市场：all)
+[92m10:29:18 - LiteLLM:WARNING[0m: get_model_cost_map.py:213 - LiteLLM: Failed to fetch remote model cost map from https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json: _ssl.c:1063: The handshake operation timed out. Falling back to local backup.
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 18, in <module>
+    from src.notification import NotificationService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/notification.py", line 25, in <module>
+    from bot.models import BotMessage
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/__init__.py", line 35, in <module>
+    from bot.dispatcher import CommandDispatcher, get_dispatcher
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/dispatcher.py", line 16, in <module>
+    from bot.commands.base import BotCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/__init__.py", line 13, in <module>
+    from bot.commands.analyze import AnalyzeCommand
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/bot/commands/analyze.py", line 16, in <module>
+    from data_provider.base import canonical_stock_code
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/__init__.py", line 32, in <module>
+    from .base import BaseFetcher, DataFetcherManager
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/data_provider/base.py", line 1739
+    except Exception as e:
+    ^^^^^^
+IndentationError: expected an indented block after 'except' statement on line 1738
+[2026-03-17 10:29:11] === 大盘复盘完成 ===
+[2026-03-17 10:29:54] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:29:54] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:29:54] 🔍 检查依赖...
+[2026-03-17 10:29:54] ✅ 依赖检查完成
+[2026-03-17 10:29:54] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 19, in <module>
+    from src.market_analyzer import MarketAnalyzer
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/market_analyzer.py", line 22, in <module>
+    from src.search_service import SearchService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/search_service.py", line 23, in <module>
+    from newspaper import Article, Config
+ModuleNotFoundError: No module named 'newspaper'
+[2026-03-17 10:29:54] === 大盘复盘完成 ===
+[2026-03-17 10:30:39] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:30:39] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:30:39] 🔍 检查依赖...
+[2026-03-17 10:30:39] ✅ 依赖检查完成
+[2026-03-17 10:30:39] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 19, in <module>
+    from src.market_analyzer import MarketAnalyzer
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/market_analyzer.py", line 22, in <module>
+    from src.search_service import SearchService
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/search_service.py", line 23, in <module>
+    from newspaper import Article, Config
+  File "/usr/local/lib/python3.14/site-packages/newspaper/__init__.py", line 10, in <module>
+    from .api import (build, build_article, fulltext, hot, languages,
+                      popular_urls, Configuration as Config)
+  File "/usr/local/lib/python3.14/site-packages/newspaper/api.py", line 14, in <module>
+    from .article import Article
+  File "/usr/local/lib/python3.14/site-packages/newspaper/article.py", line 15, in <module>
+    from . import network
+  File "/usr/local/lib/python3.14/site-packages/newspaper/network.py", line 14, in <module>
+    from .configuration import Configuration
+  File "/usr/local/lib/python3.14/site-packages/newspaper/configuration.py", line 15, in <module>
+    from .parsers import Parser
+  File "/usr/local/lib/python3.14/site-packages/newspaper/parsers.py", line 12, in <module>
+    import lxml.html.clean
+  File "/usr/local/lib/python3.14/site-packages/lxml/html/clean.py", line 18, in <module>
+    raise ImportError(
+    ...<2 lines>...
+    ) from None
+ImportError: lxml.html.clean module is now a separate project lxml_html_clean.
+Install lxml[html_clean] or lxml_html_clean directly.
+[2026-03-17 10:30:39] === 大盘复盘完成 ===
+[2026-03-17 10:30:56] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:30:56] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:30:56] 🔍 检查依赖...
+[2026-03-17 10:30:56] ✅ 依赖检查完成
+[2026-03-17 10:30:56] 📊 执行大盘复盘 (市场：all)
+Traceback (most recent call last):
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_review.py", line 19, in <module>
+    from src.market_analyzer import MarketAnalyzer
+  File "/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/market_analyzer.py", line 24, in <module>
+    from src.core.market_strategy import get_market_strategy_blueprint
+ImportError: cannot import name 'get_market_strategy_blueprint' from 'src.core.market_strategy' (/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/src/core/market_strategy.py)
+[2026-03-17 10:30:56] === 大盘复盘完成 ===
+[2026-03-17 10:31:21] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:31:21] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:31:21] 🔍 检查依赖...
+[2026-03-17 10:31:21] ✅ 依赖检查完成
+[2026-03-17 10:31:21] 📊 执行大盘复盘 (市场：all)
+[92m10:31:29 - LiteLLM:WARNING[0m: get_model_cost_map.py:213 - LiteLLM: Failed to fetch remote model cost map from https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json: _ssl.c:1063: The handshake operation timed out. Falling back to local backup.
+[2026-03-17 10:31:21] === 大盘复盘完成 ===
+[2026-03-17 10:35:43] 📄 加载环境变量：/Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/.env
+[2026-03-17 10:35:43] === Daily Stock Analysis 开始 ===
+[2026-03-17 10:35:43] 🔍 检查依赖...
+[2026-03-17 10:35:43] ✅ 依赖检查完成
+[2026-03-17 10:35:43] 📊 执行大盘复盘 (市场：all)
+2026-03-17 10:35:48,814 | INFO     | __main__             | ========== 开始大盘复盘分析 (市场: both) ==========
+2026-03-17 10:35:48,816 | WARNING  | src.notification     | 未配置有效的通知渠道，将不发送推送通知
+2026-03-17 10:35:48,816 | INFO     | __main__             | 开始执行大盘复盘分析...
+2026-03-17 10:35:48,816 | WARNING  | data_provider.tushare_fetcher | Tushare Token 未配置，此数据源不可用
+2026-03-17 10:35:48,816 | INFO     | data_provider.base   | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-17 10:35:48,816 | WARNING  | data_provider.tushare_fetcher | Tushare Token 未配置，此数据源不可用
+2026-03-17 10:35:48,816 | INFO     | data_provider.base   | 已初始化 6 个数据源（按优先级）: EfinanceFetcher(P0), AkshareFetcher(P1), TushareFetcher(P2), PytdxFetcher(P2), BaostockFetcher(P3), YfinanceFetcher(P4)
+2026-03-17 10:35:48,816 | INFO     | __main__             | 生成 A 股大盘复盘报告...
+2026-03-17 10:35:48,816 | INFO     | src.market_analyzer  | ========== 开始大盘复盘分析 ==========
+2026-03-17 10:35:48,816 | INFO     | src.market_analyzer  | [大盘] 获取主要指数实时行情...
+2026-03-17 10:35:48,817 | WARNING  | data_provider.base   | [EfinanceFetcher] 获取指数行情失败: No module named 'efinance'
+  0%|          | 0/1 [00:00<?, ?it/s]                                     2026-03-17 10:35:52,890 | ERROR    | data_provider.akshare_fetcher | [Akshare] 获取指数行情失败: Can not decode value starting with character '<'
+2026-03-17 10:35:57,949 | ERROR    | yfinance             | Failed to get ticker '000001.SS' reason: Failed to perform, curl: (35) TLS connect error: error:00000000:invalid library (0):OPENSSL_internal:invalid library (0). See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2026-03-17 10:36:03,483 | INFO     | data_provider.yfinance_fetcher | [Yfinance] 成功获取 6 个 A 股指数行情
+2026-03-17 10:36:03,483 | INFO     | data_provider.base   | [YfinanceFetcher] 获取指数行情成功
+2026-03-17 10:36:03,483 | INFO     | src.market_analyzer  | [大盘] 获取到 6 个指数行情
+2026-03-17 10:36:03,483 | INFO     | src.market_analyzer  | [大盘] 获取市场涨跌统计...
+2026-03-17 10:36:03,484 | WARNING  | data_provider.base   | [EfinanceFetcher] 获取市场统计失败: No module named 'efinance'
+2026-03-17 10:36:06,167 | INFO     | data_provider.akshare_fetcher | [API调用] ak.stock_zh_a_spot_em() 获取市场统计...
+  0%|          | 0/58 [00:00<?, ?it/s]                                      2026-03-17 10:36:14,424 | WARNING  | data_provider.akshare_fetcher | [Akshare] 东财接口获取市场统计失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，尝试新浪接口
+2026-03-17 10:36:17,596 | INFO     | data_provider.akshare_fetcher | [API调用] ak.stock_zh_a_spot() 获取市场统计(新浪)...
+Please wait for a moment:   0%|          | 0/1 [00:00<?, ?it/s]                                                               2026-03-17 10:36:17,715 | ERROR    | data_provider.akshare_fetcher | [Akshare] 新浪接口获取市场统计也失败: Can not decode value starting with character '<'
+2026-03-17 10:36:17,715 | INFO     | src.market_analyzer  | [大盘] 获取板块涨跌榜...
+2026-03-17 10:36:24,168 | INFO     | data_provider.akshare_fetcher | [API调用] ak.stock_board_industry_name_em() 获取板块排行...
+  0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:01<00:05,  1.81s/it]                                             2026-03-17 10:36:38,634 | WARNING  | data_provider.akshare_fetcher | [Akshare] 东财接口获取板块排行失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))，尝试新浪接口
+2026-03-17 10:36:42,561 | INFO     | data_provider.akshare_fetcher | [API调用] ak.stock_sector_spot() 获取板块排行(新浪)...
+2026-03-17 10:36:42,624 | ERROR    | data_provider.akshare_fetcher | [Akshare] 新浪接口获取板块排行也失败: Expecting value: line 2 column 1 (char 1)
+2026-03-17 10:36:42,625 | WARNING  | data_provider.base   | [EfinanceFetcher] 获取板块排行失败: No module named 'efinance'
+2026-03-17 10:36:42,625 | WARNING  | data_provider.base   | [板块排行] 所有数据源均失败，最终错误: EfinanceFetcher (ModuleNotFoundError) No module named 'efinance'
+2026-03-17 10:36:42,625 | WARNING  | src.market_analyzer  | [大盘] 搜索服务未配置，跳过新闻搜索
+2026-03-17 10:36:42,625 | WARNING  | src.market_analyzer  | [大盘] AI分析器未配置或不可用，使用模板生成报告
+2026-03-17 10:36:42,625 | INFO     | src.market_analyzer  | ========== 大盘复盘分析完成 ==========
+2026-03-17 10:36:42,625 | INFO     | __main__             | 生成美股大盘复盘报告...
+2026-03-17 10:36:42,625 | INFO     | src.market_analyzer  | ========== 开始大盘复盘分析 ==========
+2026-03-17 10:36:42,625 | INFO     | src.market_analyzer  | [大盘] 获取主要指数实时行情...
+2026-03-17 10:36:43,158 | INFO     | data_provider.yfinance_fetcher | [Yfinance] 成功获取 4 个美股指数行情
+2026-03-17 10:36:43,158 | INFO     | data_provider.base   | [YfinanceFetcher] 获取指数行情成功
+2026-03-17 10:36:43,158 | INFO     | src.market_analyzer  | [大盘] 获取到 4 个指数行情
+2026-03-17 10:36:43,158 | WARNING  | src.market_analyzer  | [大盘] 搜索服务未配置，跳过新闻搜索
+2026-03-17 10:36:43,158 | WARNING  | src.market_analyzer  | [大盘] AI分析器未配置或不可用，使用模板生成报告
+2026-03-17 10:36:43,158 | INFO     | src.market_analyzer  | ========== 大盘复盘分析完成 ==========
+2026-03-17 10:36:43,158 | INFO     | src.notification     | 日报已保存到: /Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/reports/market_review_20260317.md
+2026-03-17 10:36:43,158 | INFO     | __main__             | 大盘复盘报告已保存: /Users/webleon/.openclaw/workspace/skills/daily-stock-analysis-openclaw-skill/reports/market_review_20260317.md
+2026-03-17 10:36:43,158 | INFO     | __main__             | 已跳过推送通知 (--no-notify)
+2026-03-17 10:36:43,158 | INFO     | __main__             | 大盘复盘分析完成
+
+==================================================
+# A股大盘复盘
+
+## 2026-03-17 大盘复盘
+
+### 一、市场总结
+今日A股市场整体呈现**小幅下跌**态势。
+
+### 二、主要指数
+- **上证指数**: 4103.18 (-0.00%)
+- **深证成指**: 14350.53 (-0.00%)
+- **创业板指**: 3362.90 (-0.00%)
+- **科创50**: 1381.52 (-0.00%)
+
+
+### 三、涨跌统计
+| 指标 | 数值 |
+|------|------|
+| 上涨家数 | 0 |
+| 下跌家数 | 0 |
+| 涨停 | 0 |
+| 跌停 | 0 |
+| 两市成交额 | 0亿 |
+
+
+### 五、风险提示
+市场有风险，投资需谨慎。以上数据仅供参考，不构成投资建议。
+
+### 六、策略框架
+- **趋势结构**: 判断市场处于上升、震荡还是防守阶段。
+- **资金情绪**: 识别短线风险偏好与情绪温度。
+- **主线板块**: 提炼可交易主线与规避方向。
+
+
+---
+*复盘时间: 10:36*
+
+
+---
+
+> 以下为美股大盘复盘
+
+# 美股大盘复盘
+
+## 2026-03-17 大盘复盘
+
+### 一、市场总结
+今日美股市场整体呈现**强势上涨**态势。
+
+### 二、主要指数
+- **标普500指数**: 6699.38 (↑1.01%)
+- **纳斯达克综合指数**: 22374.18 (↑1.22%)
+- **道琼斯工业指数**: 46946.41 (↑0.83%)
+- **VIX恐慌指数**: 23.51 (↓13.53%)
+
+
+
+### 五、风险提示
+市场有风险，投资需谨慎。以上数据仅供参考，不构成投资建议。
+
+### 六、策略框架
+- **趋势结构**: 判断市场处于上升、震荡还是防守阶段。
+- **资金情绪**: 识别短线风险偏好与情绪温度。
+- **主线板块**: 提炼可交易主线与规避方向。
+
+
+---
+*复盘时间: 10:36*
+
+==================================================
+[2026-03-17 10:35:43] === 大盘复盘完成 ===
