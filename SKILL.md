@@ -4,10 +4,10 @@ description: "分析股票和市场。当用户想要分析单个或多个股票
 output:
   directory: "~/.openclaw/workspace/output/daily-stock-analysis"
   naming: "{YYYY-MM-DD}_{SYMBOL}.{ext}"
-  formats: ["md", "html"]
+  formats: ["html", "md"]  # HTML 优先，除非用户要求否则不输出 MD
   examples:
-    - "2026-03-24_AAPL.md"
-    - "2026-03-24_NVDA.html"
+    - "2026-03-24_AAPL.html"
+    - "2026-03-24_market-review.html"
 ---
 
 # 股票分析器
