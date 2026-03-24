@@ -35,7 +35,8 @@ from .akshare_fetcher import AkshareFetcher, is_hk_stock_code
 from .tushare_fetcher import TushareFetcher
 from .pytdx_fetcher import PytdxFetcher
 from .baostock_fetcher import BaostockFetcher
-from .yfinance_fetcher import YfinanceFetcher
+from .yfinance_fetcher import YFinanceFetcher
+from .hybrid_fetcher import HybridFetcher
 from .us_index_mapping import is_us_index_code, is_us_stock_code, get_us_index_yf_symbol, US_INDEX_MAPPING
 
 __all__ = [

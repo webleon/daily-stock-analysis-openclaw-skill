@@ -23,6 +23,12 @@ from src.search_service import SearchService
 from src.core.market_profile import get_profile, MarketProfile
 from src.core.market_strategy import get_market_strategy_blueprint
 from data_provider.base import DataFetcherManager
+from data_provider.eastmoney_fetcher import EastmoneyFetcher
+try:
+    from tavily import TavilyClient
+    TAVILY_AVAILABLE = True
+except ImportError:
+    TAVILY_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
