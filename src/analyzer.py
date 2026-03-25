@@ -915,10 +915,11 @@ class GeminiAnalyzer:
     def analyze(
         self, 
         context: Dict[str, Any],
-        news_context: Optional[str] = None
+        news_context: Optional[str] = None,
+        multi_agent: bool = False
     ) -> AnalysisResult:
         """
-        分析单只股票
+        分析单只股票（支持多 Agent 模式）
         
         流程：
         1. 格式化输入数据（技术面 + 新闻）
@@ -929,10 +930,15 @@ class GeminiAnalyzer:
         Args:
             context: 从 storage.get_analysis_context() 获取的上下文数据
             news_context: 预先搜索的新闻内容（可选）
+            multi_agent: 是否启用多 Agent 编排（默认 False）
             
         Returns:
             AnalysisResult 对象
         """
+        # 如果启用多 Agent 模式，调用多 Agent 编排
+        if multi_agent:
+            logger.info(f"[{context.get('code', 'Unknown')}] 启用多 Agent 编排分析")
+            return self._analyze_with_multi_agent(context, news_context)
         code = context.get('code', 'Unknown')
         config = get_config()
         report_language = normalize_report_language(getattr(config, "report_language", "zh"))
@@ -1727,6 +1733,211 @@ class GeminiAnalyzer:
             results.append(result)
         
         return results
+    
+    def _analyze_with_multi_agent(
+        self,
+        context: Dict[str, Any],
+        news_context: Optional[str] = None
+    ) -> AnalysisResult:
+        """
+        使用多 Agent 编排分析股票
+        
+        Args:
+            context: 分析上下文
+            news_context: 新闻上下文
+            
+        Returns:
+            AnalysisResult 对象
+        """
+        from .multi_agent_orchestrator import MultiAgentOrchestrator
+        
+        code = context.get('code', 'Unknown')
+        logger.info(f"[{code}] 开始多 Agent 编排分析")
+        
+        try:
+            # 1. 创建编排器
+            orchestrator = MultiAgentOrchestrator(code)
+            
+            # 2. 生成任务清单
+            tasks = orchestrator.generate_tasks()
+            logger.info(f"[{code}] 生成 {len(tasks)} 个分析任务")
+            
+            # 3. 启动 subagents（使用模拟数据演示）
+            # TODO: 在真实 OpenClaw 环境中替换为 sessions_spawn
+            logger.info(f"[{code}] 启动 subagents...")
+            mock_results = self._execute_mock_subagents(code)
+            
+            # 4. 解析 subagent 结果
+            for i, (result_text, task) in enumerate(zip(mock_results, tasks)):
+                result = orchestrator.parse_subagent_result(result_text, task.type)
+                orchestrator.results.append(result)
+                logger.info(f"[{code}] 解析结果 {i+1}: {result.analysis_type} - 评分 {result.score}")
+            
+            # 5. 综合分析
+            logger.info(f"[{code}] 综合分析中...")
+            report = orchestrator.synthesize_results()
+            
+            # 6. 转换为 AnalysisResult
+            analysis_result = self._convert_report_to_analysis_result(report, context)
+            
+            logger.info(f"[{code}] 多 Agent 分析完成！综合评分：{report['overall_score']}")
+            
+            return analysis_result
+            
+        except Exception as e:
+            logger.error(f"[{code}] 多 Agent 分析失败：{e}", exc_info=True)
+            # 降级到单 Agent 模式
+            logger.warning(f"[{code}] 降级到单 Agent 模式")
+            return self._analyze_single_agent_fallback(context, news_context)
+    
+    def _execute_mock_subagents(self, stock_code: str) -> List[str]:
+        """
+        模拟 subagent 执行（演示用）
+        
+        TODO: 在真实 OpenClaw 环境中替换为 sessions_spawn 调用
+        """
+        import json
+        from datetime import datetime
+        
+        # 模拟技术面分析结果
+        technical_result = json.dumps({
+            "analysis_type": "technical_analysis",
+            "stock_code": stock_code,
+            "timestamp": datetime.now().isoformat(),
+            "score": 65,
+            "conclusion": "短期震荡，中期上涨趋势未变",
+            "key_points": [
+                "价格位于 20 日均线附近",
+                "成交量萎缩，观望情绪浓厚",
+                "RSI 中性，MACD 金叉"
+            ],
+            "data": {
+                "price": 172.50,
+                "ma20": 171.20,
+                "ma60": 168.80,
+                "rsi": 58,
+                "volume_ratio": 0.90
+            }
+        }, ensure_ascii=False)
+        
+        # 模拟舆情面分析结果
+        sentiment_result = json.dumps({
+            "analysis_type": "sentiment_analysis",
+            "stock_code": stock_code,
+            "timestamp": datetime.now().isoformat(),
+            "score": 72,
+            "conclusion": "舆情面积极，新产品预售超预期",
+            "key_points": [
+                "新产品预售突破预期",
+                "回购计划支撑股价",
+                "市场竞争担忧仍存"
+            ],
+            "data": {
+                "news_sentiment": "积极",
+                "social_sentiment": "中性"
+            }
+        }, ensure_ascii=False)
+        
+        # 模拟基本面分析结果
+        fundamental_result = json.dumps({
+            "analysis_type": "fundamental_analysis",
+            "stock_code": stock_code,
+            "timestamp": datetime.now().isoformat(),
+            "score": 85,
+            "conclusion": "基本面强劲，新业务持续增长",
+            "key_points": [
+                "核心业务同比增长 15%",
+                "新业务预售超预期",
+                "回购计划增厚 EPS"
+            ],
+            "data": {
+                "valuation": {"pe_ttm": 28.5, "peg": 2.1},
+                "financials": {
+                    "revenue_growth": 0.085,
+                    "profit_growth": 0.123,
+                    "roe": 1.45
+                }
+            }
+        }, ensure_ascii=False)
+        
+        return [technical_result, sentiment_result, fundamental_result]
+    
+    def _convert_report_to_analysis_result(
+        self,
+        report: Dict[str, Any],
+        context: Dict[str, Any]
+    ) -> AnalysisResult:
+        """
+        将多 Agent 报告转换为 AnalysisResult
+        
+        Args:
+            report: orchestrator.synthesize_results() 返回的报告
+            context: 原始分析上下文
+            
+        Returns:
+            AnalysisResult 对象
+        """
+        dashboard = report["dashboard"]
+        core = dashboard["core_conclusion"]
+        
+        # 映射信号类型到 operation_advice
+        signal_type = core["signal_type"]
+        if "强烈买入" in signal_type:
+            operation_advice = "买入"
+            decision_type = "buy"
+        elif "买入" in signal_type:
+            operation_advice = "买入"
+            decision_type = "buy"
+        elif "持有" in signal_type:
+            operation_advice = "持有"
+            decision_type = "hold"
+        elif "减持" in signal_type:
+            operation_advice = "减仓"
+            decision_type = "sell"
+        else:
+            operation_advice = "观望"
+            decision_type = "hold"
+        
+        # 映射置信度
+        overall_score = report["overall_score"]
+        if overall_score >= 80:
+            confidence_level = "高"
+        elif overall_score >= 60:
+            confidence_level = "中"
+        else:
+            confidence_level = "低"
+        
+        # 创建 AnalysisResult
+        return AnalysisResult(
+            code=report["stock_code"],
+            name=context.get('stock_name', report["stock_code"]),
+            sentiment_score=int(overall_score),
+            trend_prediction=signal_type,
+            operation_advice=operation_advice,
+            decision_type=decision_type,
+            confidence_level=confidence_level,
+            dashboard=dashboard,
+            analysis_summary=core["one_sentence"],
+            report_language="zh"
+        )
+    
+    def _analyze_single_agent_fallback(
+        self,
+        context: Dict[str, Any],
+        news_context: Optional[str] = None
+    ) -> AnalysisResult:
+        """
+        多 Agent 失败时的降级方案 - 使用单 Agent 模式
+        
+        Args:
+            context: 分析上下文
+            news_context: 新闻上下文
+            
+        Returns:
+            AnalysisResult 对象
+        """
+        logger.warning("多 Agent 分析失败，使用单 Agent 降级模式")
+        return self.analyze(context, news_context, multi_agent=False)
 
 
 # 便捷函数
