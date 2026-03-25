@@ -48,6 +48,87 @@ output:
 3. 综合分析生成决策仪表盘
 4. 输出 HTML 格式完整报告
 
+---
+
+## 🔧 多 Agent 实现细节（供 AI 参考）
+
+当用户请求"深度分析 XXX"时，按以下流程执行：
+
+### 步骤 1: 启动 3 个专业 subagents
+
+使用 `sessions_spawn` tool 启动 3 个并行分析：
+
+```json
+{
+  "tool": "sessions_spawn",
+  "params": {
+    "task": "请对 AAPL 进行专业技术面分析，包括：\n1. 价格趋势（均线系统）\n2. 技术指标（RSI/MACD/布林带）\n3. 关键价位（支撑/阻力）\n4. 技术面评分（0-100 分）\n\n请以 JSON 格式返回，包含 score, conclusion, key_points, data 字段。",
+    "label": "技术面分析-AAPL",
+    "agentId": "research-analyst",
+    "mode": "run",
+    "runTimeoutSeconds": 300
+  }
+}
+```
+
+启动 3 个 subagents：
+1. **技术面分析** - 使用 `subagent_tasks.create_technical_analysis_task()`
+2. **舆情面分析** - 使用 `subagent_tasks.create_sentiment_analysis_task()`
+3. **基本面分析** - 使用 `subagent_tasks.create_fundamental_analysis_task()`
+
+### 步骤 2: 等待 subagent 完成
+
+每个 subagent 完成后会自动 announce 结果回主会话：
+
+```
+[Inter-session message]
+source: subagent
+session_key: agent:research-analyst:subagent:uuid
+status: completed successfully
+Result: {JSON 格式分析结果}
+```
+
+### 步骤 3: 提取并解析结果
+
+从每个 subagent 的 announce 中提取 JSON 结果：
+
+```python
+# 从 announce 文本中提取 JSON
+import json
+import re
+
+def parse_subagent_result(announce_text: str) -> dict:
+    # 找到 JSON 部分
+    json_match = re.search(r'\{.*\}', announce_text, re.DOTALL)
+    if json_match:
+        return json.loads(json_match.group())
+    return None
+```
+
+### 步骤 4: 综合分析
+
+调用 `src/multi_agent_orchestrator.py` 进行综合分析：
+
+```python
+from src.multi_agent_orchestrator import MultiAgentOrchestrator
+
+orchestrator = MultiAgentOrchestrator("AAPL")
+
+# 添加 subagent 结果
+orchestrator.results.append(technical_result)
+orchestrator.results.append(sentiment_result)
+orchestrator.results.append(fundamental_result)
+
+# 综合分析
+report = orchestrator.synthesize_results()
+```
+
+### 步骤 5: 生成 HTML 报告
+
+使用 `src/formatters.py` 生成 HTML 格式报告并保存到 output 目录。
+
+---
+
 本技能基于 `analyzer_service.py` 的逻辑，提供分析股票和整体市场的功能。
 
 ## 输出结构 (`AnalysisResult`)
