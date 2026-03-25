@@ -59,6 +59,7 @@ def demo_full_flow():
     print("AI: " + "-" * 60)
     prompt = GeminiAnalyzer.get_multi_agent_upgrade_prompt("AAPL")
     print(prompt)
+    print()
 
 
 if __name__ == "__main__":

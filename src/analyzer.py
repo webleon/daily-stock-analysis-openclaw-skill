@@ -1942,7 +1942,7 @@ class GeminiAnalyzer:
     @staticmethod
     def get_multi_agent_upgrade_prompt(stock_code: str) -> str:
         """
-        生成多 Agent 升级提示（简单版本）
+        生成多 Agent 升级提示（极简版本）
         
         Args:
             stock_code: 股票代码
@@ -1950,14 +1950,7 @@ class GeminiAnalyzer:
         Returns:
             提示文本
         """
-        return f"""
-💡 **提示：如需更专业的分析，请回复"深度分析 {stock_code}"**
-
-深度分析优势：
-- 📊 3 个专业 Agent 并行分析（技术面/舆情面/基本面）
-- 🎯 分析深度提升 42%，准确率提升 17%
-- 📄 输出完整 HTML 格式决策仪表盘
-"""
+        return f"\n💡 如需更专业的分析，请回复：**深度分析 {stock_code}**"
 
 
 # 便捷函数
