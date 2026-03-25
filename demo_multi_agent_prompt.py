@@ -23,23 +23,14 @@ def demo_upgrade_prompt():
     print()
     
     # 测试用例
-    test_cases = [
-        ("AAPL", None, "无评分提示"),
-        ("NVDA", 55, "低评分提示"),
-        ("TSLA", 68, "中评分提示"),
-        ("MSFT", 82, "高评分提示"),
-    ]
+    test_stocks = ["AAPL", "NVDA", "TSLA", "600519"]
     
-    for stock_code, score, description in test_cases:
-        print(f"\n### {description}: {stock_code}")
+    for stock_code in test_stocks:
+        print(f"\n### {stock_code}")
         print("-" * 70)
         
-        prompt = GeminiAnalyzer.get_multi_agent_upgrade_prompt(stock_code, score)
+        prompt = GeminiAnalyzer.get_multi_agent_upgrade_prompt(stock_code)
         print(prompt)
-        
-        if score:
-            print(f"(当前评分：{score}/100)")
-        print()
 
 
 def demo_full_flow():
@@ -66,7 +57,7 @@ def demo_full_flow():
     
     # 主动提示
     print("AI: " + "-" * 60)
-    prompt = GeminiAnalyzer.get_multi_agent_upgrade_prompt("AAPL", score=72)
+    prompt = GeminiAnalyzer.get_multi_agent_upgrade_prompt("AAPL")
     print(prompt)
 
 
