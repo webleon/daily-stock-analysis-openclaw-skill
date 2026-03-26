@@ -63,15 +63,31 @@ class HTMLReportGenerator:
         # 转换为 HTML（带优化样式）
         html_content = self._markdown_to_html(content, analysis_result)
         
-        # 保存文件
+        # 保存文件（遵循 SKILL.md 命名规范）
         if output_path is None:
             # 默认输出到统一目录
             output_dir = Path.home() / '.openclaw' / 'workspace' / 'output' / 'daily-stock-analysis'
             output_dir.mkdir(parents=True, exist_ok=True)
+            
             stock_code = analysis_result.get('stock_code', 'unknown')
             report_date = datetime.now().strftime('%Y-%m-%d')
-            # 遵循 SKILL.md 规范：{YYYY-MM-DD}_{SYMBOL}.{ext}
-            output_path = output_dir / f"{report_date}_{stock_code}.html"
+            
+            # 命名规范：{YYYY-MM-DD}_{SYMBOL}[_{TYPE}][_{HHMMSS}].{ext}
+            base_filename = f"{report_date}_{stock_code}"
+            
+            # 检查当天是否已有同名文件，如有则添加时间戳避免覆盖
+            existing_files = list(output_dir.glob(f"{base_filename}_*.html")) + \
+                            list(output_dir.glob(f"{base_filename}.html"))
+            
+            if len(existing_files) > 0:
+                # 同一天已有报告，添加时间戳
+                timestamp = datetime.now().strftime('%H%M%S')
+                filename = f"{base_filename}_{timestamp}.html"
+            else:
+                # 当天第一份报告
+                filename = f"{base_filename}.html"
+            
+            output_path = output_dir / filename
         
         self._save_report(html_content, str(output_path))
         

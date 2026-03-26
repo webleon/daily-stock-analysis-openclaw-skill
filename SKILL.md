@@ -3,11 +3,13 @@ name: "stock_analyzer"
 description: "分析股票和市场。当用户想要分析单个或多个股票，或进行市场复盘时调用。支持普通分析和深度分析（多 Agent 编排）两种模式。"
 output:
   directory: "~/.openclaw/workspace/output/daily-stock-analysis"
-  naming: "{YYYY-MM-DD}_{SYMBOL}.{ext}"
+  naming: "{YYYY-MM-DD}_{SYMBOL}[_{TYPE}][_{HHMMSS}].{ext}"
   formats: ["html", "md"]  # HTML 优先，除非用户要求否则不输出 MD
   examples:
-    - "2026-03-24_AAPL.html"
-    - "2026-03-24_market-review.html"
+    - "2026-03-24_AAPL.html"                    # 默认报告
+    - "2026-03-24_AAPL_143022.html"             # 同一天第二份（带时间戳）
+    - "2026-03-24_AAPL_full.html"               # 完整报告
+    - "2026-03-24_market-review.html"           # 市场复盘
 ---
 
 # 股票分析器
