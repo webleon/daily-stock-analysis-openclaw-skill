@@ -81,7 +81,7 @@ main() {
     # 大盘复盘模式
     if [[ "$MARKET_REVIEW" == true ]]; then
         log "📊 执行大盘复盘 (市场：$MARKET_TYPE)"
-        cd "$SCRIPT_DIR" && PYTHONPATH="$SCRIPT_DIR" python3 "$SCRIPT_DIR/src/core/market_review.py" \
+        cd "$SCRIPT_DIR" && python3 "$SCRIPT_DIR/src/core/market_review.py" \
             --market "$MARKET_TYPE" \
             2>&1 | tee -a "$LOG_FILE"
         
