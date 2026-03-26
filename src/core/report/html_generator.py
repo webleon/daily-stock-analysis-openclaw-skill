@@ -69,8 +69,9 @@ class HTMLReportGenerator:
             output_dir = Path.home() / '.openclaw' / 'workspace' / 'output' / 'daily-stock-analysis'
             output_dir.mkdir(parents=True, exist_ok=True)
             stock_code = analysis_result.get('stock_code', 'unknown')
-            report_date = datetime.now().strftime('%Y%m%d_%H%M%S')
-            output_path = output_dir / f"{stock_code}_{report_date}_report.html"
+            report_date = datetime.now().strftime('%Y-%m-%d')
+            # 遵循 SKILL.md 规范：{YYYY-MM-DD}_{SYMBOL}.{ext}
+            output_path = output_dir / f"{report_date}_{stock_code}.html"
         
         self._save_report(html_content, str(output_path))
         
