@@ -1002,7 +1002,7 @@ class DataFetcherManager:
         # Normalize code (strip SH/SZ prefix etc.)
         stock_code = normalize_stock_code(stock_code)
 
-        from .akshare_fetcher import _is_us_code
+        from .baostock_fetcher import _is_us_code
         from .us_index_mapping import is_us_index_code
         from ...config import get_config
 

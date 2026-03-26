@@ -5,8 +5,9 @@
 
 from .analysis import SixteenModulesAnalyzer, SixPerspectivesAnalyzer
 from .data import DataFetcherManager
-# TODO: 报告生成模块待完善
-# from .report import HTMLReportGenerator, MarkdownReportGenerator
+from .report import HTMLReportGenerator
+from datetime import datetime
+from pathlib import Path
 
 
 class StockAnalysisCore:
@@ -21,6 +22,9 @@ class StockAnalysisCore:
         
         # 初始化数据获取器
         self.data_manager = DataFetcherManager()
+        
+        # 初始化报告生成器
+        self.report_generator = HTMLReportGenerator()
     
     def fetch_data(self, stock_code, source='auto'):
         """
@@ -65,11 +69,32 @@ class StockAnalysisCore:
             "six_perspectives": six_perspectives_result
         }
     
-    def generate_report(self, analysis_result, fmt='html', lang='zh'):
-        """生成报告"""
-        # TODO: 实现实际的报告生成
-        return {
-            "format": fmt,
-            "language": lang,
-            "content": ""
-        }
+    def generate_report(self, analysis_result, fmt='html', lang='zh', output_path=None):
+        """
+        生成报告（默认输出到统一目录）
+        
+        Args:
+            analysis_result: 分析结果字典
+            fmt: 报告格式 ('html' 或 'md')
+            lang: 语言 ('zh' 或 'en')
+            output_path: 输出文件路径（可选，默认使用统一目录）
+        
+        Returns:
+            报告内容字符串
+        """
+        # 统一输出目录
+        default_output_dir = Path.home() / '.openclaw' / 'workspace' / 'output' / 'reports'
+        default_output_dir.mkdir(parents=True, exist_ok=True)
+        
+        # 如果没有指定输出路径，使用默认路径
+        if output_path is None:
+            stock_code = analysis_result.get('stock_code', 'unknown')
+            report_date = datetime.now().strftime('%Y%m%d_%H%M%S')
+            output_path = default_output_dir / f"{stock_code}_{report_date}_report.html"
+        
+        if fmt == 'html':
+            generator = HTMLReportGenerator()
+            return generator.generate(analysis_result, str(output_path))
+        else:
+            # TODO: Markdown 报告生成
+            return f"# {analysis_result.get('stock_name', '股票')} 分析报告\n\n报告内容..."
