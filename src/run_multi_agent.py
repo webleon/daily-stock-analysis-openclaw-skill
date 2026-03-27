@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from multi_agent_orchestrator import MultiAgentOrchestrator, SubagentResult
 try:
-    from subagent_tasks import get_all_tasks
+    from .agents.subagent_tasks import get_all_tasks
 except ImportError:
     get_all_tasks = None
 

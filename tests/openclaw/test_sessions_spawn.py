@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
-from subagent_tasks import get_all_tasks
+from src.agents.subagent_tasks import get_all_tasks
 from multi_agent_orchestrator import MultiAgentOrchestrator
 
 
