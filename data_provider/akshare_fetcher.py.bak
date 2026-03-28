@@ -29,7 +29,7 @@ from tenacity import (
 )
 
 try:
-    # Patch removed
+    from patch.eastmoney_patch import eastmoney_patch
 except ImportError:
     eastmoney_patch = lambda: None
 
