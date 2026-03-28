@@ -10,7 +10,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from bot.models import BotMessage, BotResponse
+from src.core.utils.models import BotMessage, BotResponse
 
 
 class BotCommand(ABC):

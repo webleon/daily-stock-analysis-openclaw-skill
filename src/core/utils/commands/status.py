@@ -12,8 +12,8 @@ import sys
 from datetime import datetime
 from typing import List
 
-from bot.commands.base import BotCommand
-from bot.models import BotMessage, BotResponse
+from src.core.utils.commands.base import BotCommand
+from src.core.utils.models import BotMessage, BotResponse
 
 
 class StatusCommand(BotCommand):

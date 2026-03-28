@@ -11,12 +11,12 @@ import json
 import logging
 from typing import Dict, Any, Optional, TYPE_CHECKING
 
-from bot.models import WebhookResponse
-from bot.dispatcher import get_dispatcher
-from bot.platforms import ALL_PLATFORMS
+from src.core.utils.models import WebhookResponse
+from src.core.utils.dispatcher import get_dispatcher
+from src.core.utils.platforms import ALL_PLATFORMS
 
 if TYPE_CHECKING:
-    from bot.platforms.base import BotPlatform
+    from src.core.utils.platforms.base import BotPlatform
 
 logger = logging.getLogger(__name__)
 

@@ -5,8 +5,8 @@ Chat command for free-form conversation with the Agent.
 
 import logging
 
-from bot.commands.base import BotCommand
-from bot.models import BotMessage, BotResponse
+from src.core.utils.commands.base import BotCommand
+from src.core.utils.models import BotMessage, BotResponse
 from src.config import get_config
 
 logger = logging.getLogger(__name__)

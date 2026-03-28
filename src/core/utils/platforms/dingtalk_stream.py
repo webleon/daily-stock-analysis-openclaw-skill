@@ -38,7 +38,7 @@ except ImportError:
     logger.warning("[DingTalk Stream] dingtalk-stream SDK 未安装，Stream 模式不可用")
     logger.warning("[DingTalk Stream] 请运行: pip install dingtalk-stream")
 
-from bot.models import BotMessage, BotResponse, ChatType
+from src.core.utils.models import BotMessage, BotResponse, ChatType
 
 
 class DingtalkStreamHandler:
@@ -236,7 +236,7 @@ class DingtalkStreamClient:
         """创建消息处理函数"""
 
         def handle_message(message: BotMessage) -> BotResponse:
-            from bot.dispatcher import get_dispatcher
+            from src.core.utils.dispatcher import get_dispatcher
             dispatcher = get_dispatcher()
             return dispatcher.dispatch(message)
 

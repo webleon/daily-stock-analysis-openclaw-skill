@@ -31,8 +31,8 @@
 - /status             - 系统状态
 """
 
-from bot.models import BotMessage, BotResponse, ChatType, WebhookResponse
-from bot.dispatcher import CommandDispatcher, get_dispatcher
+from src.core.utils.models import BotMessage, BotResponse, ChatType, WebhookResponse
+from src.core.utils.dispatcher import CommandDispatcher, get_dispatcher
 
 __all__ = [
     'BotMessage',

@@ -9,8 +9,8 @@
 
 from typing import List
 
-from bot.commands.base import BotCommand
-from bot.models import BotMessage, BotResponse
+from src.core.utils.commands.base import BotCommand
+from src.core.utils.models import BotMessage, BotResponse
 
 
 class HelpCommand(BotCommand):
@@ -44,7 +44,7 @@ class HelpCommand(BotCommand):
     def execute(self, message: BotMessage, args: List[str]) -> BotResponse:
         """执行帮助命令"""
         # 延迟导入避免循环依赖
-        from bot.dispatcher import get_dispatcher
+        from src.core.utils.dispatcher import get_dispatcher
         
         dispatcher = get_dispatcher()
         

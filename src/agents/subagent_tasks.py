@@ -3,10 +3,27 @@
 """
 Subagent 任务模板
 用于在 OpenClaw 中启动专业分析 subagent
+
+集成多 Agent 编排器，支持：
+- Agent 状态监控
+- 错误恢复机制
+- 日志记录
+- 超时处理
 """
 
 from datetime import datetime
-from typing import Dict, Any
+from typing import Dict, Any, List, Optional
+import logging
+
+try:
+    from .orchestrator import MultiAgentOrchestrator, AgentStatus
+except ImportError:
+    from orchestrator import MultiAgentOrchestrator, AgentStatus
+
+logger = logging.getLogger(__name__)
+
+# 创建全局编排器实例
+orchestrator = MultiAgentOrchestrator()
 
 
 def create_technical_analysis_task(stock_code: str) -> Dict[str, Any]:
@@ -244,15 +261,154 @@ def get_all_tasks(stock_code: str) -> list:
     ]
 
 
+def run_parallel_analysis(stock_code: str, timeout_seconds: int = 300) -> Dict[str, Any]:
+    """
+    使用编排器运行并行分析
+    
+    Args:
+        stock_code: 股票代码
+        timeout_seconds: 超时时间（秒）
+        
+    Returns:
+        results: 所有分析结果
+    """
+    logger.info(f"开始对 {stock_code} 进行多 Agent 并行分析")
+    
+    # 获取所有任务
+    tasks = get_all_tasks(stock_code)
+    session_keys = []
+    
+    # 启动所有 Agent
+    for i, task in enumerate(tasks):
+        agent_name = task['label'].split('-')[0]
+        session_key = orchestrator.spawn_agent(task['task'], agent_name)
+        session_keys.append({
+            'key': session_key,
+            'type': agent_name,
+            'task': task
+        })
+        logger.info(f"启动 Agent {i+1}/{len(tasks)}: {agent_name}")
+    
+    # 等待所有 Agent 完成
+    results = {}
+    for session in session_keys:
+        session_key = session['key']
+        analysis_type = session['type']
+        
+        logger.info(f"等待 {analysis_type} 完成...")
+        
+        # 监控状态
+        final_status = orchestrator.wait_for_completion(session_key, poll_interval=2.0)
+        
+        if final_status == AgentStatus.COMPLETED.value:
+            # 模拟结果（实际应该从 OpenClaw 获取）
+            results[analysis_type] = {
+                'status': 'completed',
+                'data': {'message': f'{analysis_type} 完成'}
+            }
+            logger.info(f"{analysis_type} 分析完成")
+        elif final_status == AgentStatus.TIMEOUT.value:
+            results[analysis_type] = {
+                'status': 'timeout',
+                'error': f'任务超时（>{timeout_seconds}秒）'
+            }
+            logger.error(f"{analysis_type} 分析超时")
+        else:
+            # 尝试错误恢复
+            success = orchestrator.recover_from_error(session_key, max_retries=3)
+            if success:
+                # 重试后再次等待
+                retry_status = orchestrator.wait_for_completion(session_key)
+                results[analysis_type] = {
+                    'status': 'retry_' + retry_status,
+                    'data': {'message': f'{analysis_type} 重试后{retry_status}'}
+                }
+            else:
+                results[analysis_type] = {
+                    'status': 'failed',
+                    'error': '错误恢复失败'
+                }
+            logger.warning(f"{analysis_type} 分析失败，恢复结果：{success}")
+    
+    # 获取所有日志
+    all_logs = {}
+    for session in session_keys:
+        all_logs[session['type']] = orchestrator.get_logs(session['key'])
+    
+    return {
+        'stock_code': stock_code,
+        'timestamp': datetime.now().isoformat(),
+        'results': results,
+        'logs': all_logs,
+        'summary': {
+            'total_agents': len(session_keys),
+            'completed': sum(1 for r in results.values() if r['status'] == 'completed'),
+            'failed': sum(1 for r in results.values() if r['status'] in ['failed', 'timeout']),
+        }
+    }
+
+
+def get_orchestrator_status() -> Dict[str, Any]:
+    """
+    获取编排器当前状态
+    
+    Returns:
+        status: 编排器状态信息
+    """
+    return {
+        'active_sessions': len([s for s in orchestrator.agents.values() 
+                               if s.status == AgentStatus.RUNNING]),
+        'total_sessions': len(orchestrator.agents),
+        'sessions': orchestrator.get_all_sessions()
+    }
+
+
 # 测试
 if __name__ == "__main__":
     import json
     
-    tasks = get_all_tasks("AAPL")
+    print("=" * 60)
+    print("Subagent 任务模板测试")
+    print("=" * 60)
+    print()
     
+    # 测试 1: 生成任务
+    print("测试 1: 生成 subagent 任务")
+    tasks = get_all_tasks("AAPL")
     print(f"生成 {len(tasks)} 个 subagent 任务:\n")
     
     for i, task in enumerate(tasks, 1):
         print(f"{i}. {task['label']}")
         print(f"   任务长度：{len(task['task'])} 字符")
         print()
+    
+    # 测试 2: 编排器功能
+    print("-" * 60)
+    print("测试 2: 多 Agent 编排器功能")
+    print()
+    
+    # 启动测试 Agent
+    session_key = orchestrator.spawn_agent("测试任务", "test_agent")
+    print(f"启动 Agent: {session_key}")
+    
+    # 监控状态
+    status = orchestrator.monitor_status(session_key)
+    print(f"当前状态：{status}")
+    
+    # 模拟完成
+    orchestrator.mark_completed(session_key, {"test": "result"})
+    status = orchestrator.monitor_status(session_key)
+    print(f"最终状态：{status}")
+    
+    # 获取日志
+    logs = orchestrator.get_logs(session_key)
+    print(f"日志数量：{len(logs)}")
+    
+    # 获取会话信息
+    info = orchestrator.get_session_info(session_key)
+    print(f"会话信息：{json.dumps(info, indent=2, ensure_ascii=False)}")
+    
+    print()
+    print("=" * 60)
+    print("测试完成")
+    print("=" * 60)

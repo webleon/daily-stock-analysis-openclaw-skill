@@ -31,7 +31,7 @@ from src.report_language import (
     localize_trend_prediction,
     normalize_report_language,
 )
-from bot.models import BotMessage
+from src.core.utils.models import BotMessage
 from src.utils.data_processing import normalize_model_used
 from src.notification_sender import (
     AstrbotSender,
@@ -411,7 +411,7 @@ class NotificationService(
             是否发送成功
         """
         try:
-            from bot.platforms.feishu_stream import FeishuReplyClient, FEISHU_SDK_AVAILABLE
+            from src.core.utils.platforms.feishu_stream import FeishuReplyClient, FEISHU_SDK_AVAILABLE
             if not FEISHU_SDK_AVAILABLE:
                 logger.warning("飞书 SDK 不可用，无法发送 Stream 回复")
                 return False

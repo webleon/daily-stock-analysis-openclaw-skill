@@ -12,8 +12,8 @@ import time
 from collections import defaultdict
 from typing import Dict, List, Optional, Type, Callable
 
-from bot.models import BotMessage, BotResponse
-from bot.commands.base import BotCommand
+from src.core.utils.models import BotMessage, BotResponse
+from src.core.utils.commands.base import BotCommand
 
 logger = logging.getLogger(__name__)
 
@@ -327,7 +327,7 @@ def get_dispatcher() -> CommandDispatcher:
         )
         
         # 自动注册所有命令
-        from bot.commands import ALL_COMMANDS
+        from src.core.utils.commands import ALL_COMMANDS
         for command_class in ALL_COMMANDS:
             _dispatcher.register_class(command_class)
         

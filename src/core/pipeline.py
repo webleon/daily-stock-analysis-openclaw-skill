@@ -39,7 +39,7 @@ from src.enums import ReportType
 from src.stock_analyzer import StockTrendAnalyzer, TrendAnalysisResult
 from src.core.trading_calendar import get_market_for_stock, is_market_open
 from data_provider.us_index_mapping import is_us_stock_code
-from bot.models import BotMessage
+from src.core.utils.models import BotMessage
 
 
 logger = logging.getLogger(__name__)

@@ -13,8 +13,8 @@ import logging
 import uuid
 from typing import List, Optional
 
-from bot.commands.base import BotCommand
-from bot.models import BotMessage, BotResponse
+from src.core.utils.commands.base import BotCommand
+from src.core.utils.models import BotMessage, BotResponse
 from data_provider.base import canonical_stock_code
 from src.config import get_config
 

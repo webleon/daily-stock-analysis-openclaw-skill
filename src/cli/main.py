@@ -22,6 +22,12 @@ A股自选股智能分析系统 - 主调度程序
 - 买点偏好：缩量回踩 MA5/MA10 支撑
 """
 import os
+import sys
+from pathlib import Path
+
+# 添加项目根目录到路径
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 from src.config import setup_env
 setup_env()
 
@@ -479,7 +485,7 @@ def start_bot_stream_clients(config: Config) -> None:
     # 启动钉钉 Stream 客户端
     if config.dingtalk_stream_enabled:
         try:
-            from bot.platforms import start_dingtalk_stream_background, DINGTALK_STREAM_AVAILABLE
+            from src.core.utils.platforms import start_dingtalk_stream_background, DINGTALK_STREAM_AVAILABLE
             if DINGTALK_STREAM_AVAILABLE:
                 if start_dingtalk_stream_background():
                     logger.info("[Main] Dingtalk Stream client started in background.")
@@ -494,7 +500,7 @@ def start_bot_stream_clients(config: Config) -> None:
     # 启动飞书 Stream 客户端
     if getattr(config, 'feishu_stream_enabled', False):
         try:
-            from bot.platforms import start_feishu_stream_background, FEISHU_SDK_AVAILABLE
+            from src.core.utils.platforms import start_feishu_stream_background, FEISHU_SDK_AVAILABLE
             if FEISHU_SDK_AVAILABLE:
                 if start_feishu_stream_background():
                     logger.info("[Main] Feishu Stream client started in background.")

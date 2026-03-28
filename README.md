@@ -1,316 +1,171 @@
-# Daily Stock Analysis - OpenClaw Skill
+# 📈 股票智能分析系统 - OpenClaw Skill
+
+[![GitHub stars](https://img.shields.io/github/stars/ZhuLinsen/daily_stock_analysis?style=social)](https://github.com/ZhuLinsen/daily_stock_analysis/stargazers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-Ready-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)](https://hub.docker.com/)
 
 基于 OpenClaw 的股票分析技能，支持 A 股/港股/美股数据分析。
 
-## 功能特性
+AI-powered stock analysis skill for OpenClaw, supporting A-share/HK-share/US-stock analysis.
 
-- ✅ 多市场支持（A 股/港股/美股）
-- ✅ 16 模块技术分析
-- ✅ 6 大投资视角
-- ✅ HTML/Markdown/微信报告
-- ✅ 多 Agent 编排
-- ✅ 自动命名规范
+> **致敬原项目**: 本项目基于 [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) 优化，专注于 OpenClaw 集成和路径规范化。
 
-## 环境要求
+---
 
-- Python 3.9+
-- 已安装核心依赖
+## ✨ 功能特性 / Features
 
-## 安装
+### 核心分析功能
 
-### 1. 安装依赖（使用主机环境）
+| 功能 | 说明 | 状态 |
+|------|------|------|
+| **多市场支持** | A 股/港股/美股及美股指数 | ✅ 原项目 |
+| **16 模块技术分析** | 均线/筹码/量能/技术指标等 | ✅ 原项目 |
+| **6 大投资视角** | 巴菲特/芒格/达利奥等视角 | ✅ 原项目 |
+| **AI 决策仪表盘** | 一句话结论 + 精确买卖点位 | ✅ 原项目 |
+| **多渠道推送** | 微信/飞书/Telegram/Discord 等 | ✅ 原项目 |
+| **GitHub Actions** | 定时自动执行，无需服务器 | ✅ 原项目 |
+
+### 本项目新增/优化功能
+
+| 功能 | 说明 | 状态 |
+|------|------|------|
+| **统一输出路径** | 所有输出强制到 `~/.openclaw/workspace/output/` | ✅ **新增** |
+| **路径安全检查** | 自动检测并纠正违规文件位置 | ✅ **新增** |
+| **统一配置模块** | `core/config.py` 集中管理路径 | ✅ **新增** |
+| **文档精简** | 从 17 个文档合并到 3 个核心文档 | ✅ **优化** |
+| **项目清理** | 删除 48MB 临时文件和缓存 | ✅ **优化** |
+| **OpenClaw 集成** | 深度集成 OpenClaw 技能系统 | ✅ **优化** |
+
+---
+
+## 🚀 快速开始 / Quick Start
+
+### 方式 1: GitHub Actions (推荐)
 
 ```bash
+# 1. Fork 仓库
+# 2. 配置 Secrets (AIHUBMIX_KEY, STOCK_LIST, 通知渠道)
+# 3. 启用 Actions
+# 4. 每个工作日 18:00 自动执行
+```
+
+**最少配置**:
+- AI 模型 API Key (AIHUBMIX_KEY 或 GEMINI_API_KEY)
+- 通知渠道 (至少一个 Webhook)
+- 股票列表 (STOCK_LIST)
+
+### 方式 2: 本地运行
+
+```bash
+# 1. 克隆项目
+git clone https://github.com/ZhuLinsen/daily_stock_analysis.git
+cd daily_stock_analysis
+
+# 2. 安装依赖
 pip3 install -r requirements.txt
-```
 
-### 2. 配置环境变量
-
-```bash
+# 3. 配置环境变量
 cp .env.example .env
-# 编辑 .env，配置必要的 API Key
+# 编辑 .env，配置 API Key
+
+# 4. 运行分析
+python3 main.py 600519
 ```
 
-### 3. 验证安装
+---
 
-```bash
-./run.sh --check
+## 📚 文档 / Documentation
+
+| 文档 | 说明 |
+|------|------|
+| **[完整指南](docs/GUIDE.md)** | 部署、配置、FAQ、多 Agent |
+| **[更新日志](docs/CHANGELOG.md)** | 版本历史 |
+| **[清理报告](docs/CLEANUP_REPORT.md)** | 项目优化记录 |
+| **[路径规范](docs/OUTPUT_PATHS.md)** | 输出路径规范 |
+
+---
+
+## 📁 项目结构 / Project Structure
+
+```
+daily_stock_analysis/
+├── src/                    # 核心代码
+├── data_provider/          # 数据源 (15 个数据源适配器)
+├── tests/                  # 测试用例
+├── templates/              # 报告模板
+├── scripts/                # 脚本工具
+├── core/                   # 配置模块 (路径配置)
+├── docs/                   # 文档目录
+│   ├── GUIDE.md            # 完整指南
+│   ├── CHANGELOG.md        # 更新日志
+│   ├── CLEANUP_REPORT.md   # 清理报告
+│   └── README.md           # 文档索引
+├── .env.example            # 环境变量示例
+├── requirements.txt        # Python 依赖
+└── README.md               # 项目说明 (本文件)
 ```
 
-## 使用方法
+---
 
-### 分析单只股票
+## 🔧 环境要求 / Requirements
 
-```bash
-./run.sh 600519
-```
+- **Python**: 3.9+
+- **依赖**: 见 `requirements.txt`
+- **可选**: Docker, GitHub Actions
 
-### 分析多只股票
+---
 
-```bash
-./run.sh 600519,000858,00700
-```
+## 📊 输出说明 / Output
 
-### 市场复盘
+**输出目录**: `~/.openclaw/workspace/output/daily-stock-analysis/`
 
-```bash
-./run.sh --market-review
-```
+**命名规范**: `{YYYY-MM-DD}_{SYMBOL}[_{HHMMSS}].html`
 
-### 深度分析（多 Agent）
-
-```bash
-# 在 OpenClaw 中
-深度分析 AAPL
-```
-
-## 输出目录
-
-报告保存在：`~/.openclaw/workspace/output/daily-stock-analysis/`
-
-命名规范：`{YYYY-MM-DD}_{SYMBOL}[_{HHMMSS}].html`
-
-示例：
+**示例**:
 - `2026-03-26_600519.html` - 当天第一份
-- `2026-03-26_600519_143022.html` - 当天第二份
+- `2026-03-26_600519_143022.html` - 同一天第二份
 
-## 项目结构
+---
 
-```
-├── core/                    # 核心模块
-│   ├── data/               # 数据获取
-│   ├── analysis/           # 分析模块
-│   └── report/             # 报告生成
-├── data_provider/          # 数据提供器
-├── templates/              # Jinja2 模板
-├── scripts/                # 工具脚本
-├── tests/                  # 测试文件
-├── output/                 # 输出目录
-└── docs/                   # 文档
-```
+## 🤝 贡献 / Contributing
 
-## 依赖说明
+欢迎提交 Issue 和 Pull Request！
 
-### 核心依赖
+详细指南见：[docs/GUIDE.md#-贡献指南](docs/GUIDE.md#-贡献指南--contributing)
 
-- `akshare` - A 股数据
-- `yfinance` - 美股/港股数据
-- `tushare` - 备用数据源
-- `pyyaml` - 配置文件
-- `jinja2` - 模板引擎
-- `openclaw` - OpenClaw SDK
+### 贡献方式
+- 🐛 报告 Bug
+- 💡 功能建议
+- 🔧 提交代码
+- 📖 文档改进
 
-### 测试依赖
+---
 
-- `pytest` - 测试框架
-- `pytest-cov` - 测试覆盖
-
-## 配置说明
-
-### 环境变量 (.env)
-
-```bash
-# 数据源 API Key
-TUSHARE_TOKEN=your_token
-AKSHARE_QPS=1
-
-# OpenClaw 配置
-OPENCLAW_MODEL=modelstudio/qwen3.5-plus
-```
-
-## 常见问题
-
-### Q: 数据不可用？
-
-A: 检查 API Key 配置和网络连接。
-
-### Q: 报告生成失败？
-
-A: 检查模板文件是否完整。
-
-### Q: 如何切换模型？
-
-A: 修改 `.env` 中的 `OPENCLAW_MODEL`。
-
-## 文档
-
-- [安装指南](INSTALL.md)
-- [功能说明](README_FEATURES.md)
-- [清理报告](CLEANUP_REPORT.md)
-
-## 许可证
+## 📄 许可证 / License
 
 MIT License
 
-## 更新日志
+---
 
-详见 [review.md](review.md)
+## 🙏 致谢 / Acknowledgments
+
+本项目基于以下优秀项目：
+
+- **[ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis)** - A 股自选股智能分析系统
+- **[OpenClaw](https://github.com/openclaw/openclaw)** - 开源 AI 自动化平台
+
+感谢原作者们的杰出贡献！
 
 ---
 
-# 安装指南
+## 📧 联系方式 / Contact
 
-## 快速安装（5 分钟）
-
-### 1. 安装 Python 依赖
-
-```bash
-cd ~/.openclaw/workspace/skills/daily-stock-analysis
-pip3 install -r requirements.txt
-```
-
-### 2. 配置环境变量
-
-```bash
-cp .env.example .env
-vim .env
-```
-
-**必填配置：**
-```bash
-# 自选股（逗号分隔）
-STOCK_LIST=600519,hk00700,AAPL,TSLA,NVDA
-
-# AI 模型（至少配置一个）
-GEMINI_API_KEY=your_key_here
-
-# 可选：通知渠道
-TELEGRAM_BOT_TOKEN=your_bot_token
-TELEGRAM_CHAT_ID=your_chat_id
-```
-
-### 3. 测试运行
-
-```bash
-# 分析单只股票
-./run.sh AAPL
-
-# 大盘复盘
-./run.sh --market-review
-```
+- **Issues**: https://github.com/ZhuLinsen/daily_stock_analysis/issues
+- **Discussions**: https://github.com/ZhuLinsen/daily_stock_analysis/discussions
+- **原项目**: https://github.com/ZhuLinsen/daily_stock_analysis
 
 ---
 
-## 配置 OpenClaw Cron Job
-
-### 编辑 Cron 配置
-
-```bash
-vim ~/.openclaw/cron/jobs.json
-```
-
-### 添加任务
-
-```json
-{
-  "daily-stock-analysis": {
-    "schedule": "0 18 * * 1-5",
-    "command": "~/.openclaw/workspace/skills/daily-stock-analysis/run.sh",
-    "timeout": 1800,
-    "enabled": true
-  }
-}
-```
-
-**执行时间：** 每个工作日 18:00（北京时间）
-
----
-
-## 获取 API Key
-
-### LLM 配置（已配置 ✅）
-
-**当前配置：** 使用 OpenClaw 现有的 Bailian（通义千问）配置
-
-```bash
-OPENAI_API_KEY=sk-sp-0f31fbee0fd044e8941c1714f447433e
-OPENAI_BASE_URL=https://coding.dashscope.aliyuncs.com/v1
-OPENAI_MODEL=qwen3.5-plus
-```
-
-**如需更换模型：**
-
-1. **Volces（火山方舟）**
-   ```bash
-   OPENAI_API_KEY=84915a62-b2c0-4cf8-b00c-3d1f7fa5dc27
-   OPENAI_BASE_URL=https://ark.cn-beijing.volces.com/api/coding/v3
-   OPENAI_MODEL=ark-code-latest
-   ```
-
-2. **Gemini**
-   ```bash
-   OPENAI_API_KEY=your_gemini_key
-   OPENAI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
-   OPENAI_MODEL=gemini-2.0-flash
-   ```
-
-### Tavily 搜索（可选）
-
-1. 访问：https://tavily.com/
-2. 注册并获取 API Key
-3. 配置到 `.env`：
-   ```bash
-   TAVILY_API_KEY=your_key_here
-   ```
-
-### Telegram Bot（可选）
-
-1. 在 Telegram 搜索 @BotFather
-2. 发送 `/newbot` 创建机器人
-3. 复制 Token 到 `.env`：
-   ```bash
-   TELEGRAM_BOT_TOKEN=your_bot_token
-   TELEGRAM_CHAT_ID=your_chat_id
-   ```
-
----
-
-## 故障排查
-
-### 依赖安装失败
-
-```bash
-# 使用国内镜像
-pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
-### 数据获取失败
-
-```bash
-# 测试 AkShare
-python3 -c "import akshare as ak; print(ak.stock_zh_a_spot_em())"
-
-# 测试 YFinance
-python3 -c "import yfinance as yf; print(yf.Ticker('AAPL').info)"
-```
-
-### LLM 调用失败
-
-```bash
-# 测试 Gemini
-python3 -c "
-import litellm
-response = litellm.completion(
-    model='gemini/gemini-pro',
-    messages=[{'role': 'user', 'content': 'test'}]
-)
-print(response)
-"
-```
-
----
-
-## 下一步
-
-- ✅ 测试单股分析：`./run.sh AAPL`
-- ✅ 测试大盘复盘：`./run.sh --market-review`
-- ✅ 配置定时任务：编辑 `~/.openclaw/cron/jobs.json`
-- ✅ 查看日志：`cat log/$(date +%Y-%m-%d).log`
-
----
-
-## 相关文档
-
-- [README.md](README.md) - 项目说明
-- [SKILL.md](SKILL.md) - OpenClaw Skill 定义
-- [原项目文档](https://github.com/ZhuLinsen/daily_stock_analysis) - 完整功能说明
+**最后更新**: 2026-03-28

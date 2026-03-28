@@ -1,6 +1,6 @@
 import pytest
 
-from bot.platforms.feishu_stream import FeishuReplyClient
+from src.core.utils.platforms.feishu_stream import FeishuReplyClient
 
 
 class DummyFeishuReplyClient(FeishuReplyClient):
@@ -34,7 +34,7 @@ class DummyFeishuReplyClient(FeishuReplyClient):
 @pytest.fixture(autouse=True)
 def patch_format_feishu_markdown(monkeypatch):
     # Keep formatting simple so byte length is predictable
-    import bot.platforms.feishu_stream as feishu_stream
+    import src.core.utils.platforms.feishu_stream as feishu_stream
 
     monkeypatch.setattr(
         feishu_stream,

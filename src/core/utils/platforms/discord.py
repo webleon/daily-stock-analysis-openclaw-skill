@@ -13,8 +13,8 @@ Discord 平台适配器
 import logging
 from typing import Dict, Any, Optional
 
-from bot.platforms.base import BotPlatform
-from bot.models import BotMessage, WebhookResponse
+from src.core.utils.platforms.base import BotPlatform
+from src.core.utils.models import BotMessage, WebhookResponse
 
 
 logger = logging.getLogger(__name__)
